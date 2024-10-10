@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="LoginAnchorPane" prefHeight="670.0" prefWidth="998.0" style="-fx-background-color: #f5f6fa;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse.factory_mvc_project.controller.LoginViewController">
+   <children>
+      <ImageView fitHeight="643.0" fitWidth="998.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Image/8636.jpg" />
+         </image>
+      </ImageView>
+      <Label prefHeight="68.0" prefWidth="998.0" style="-fx-background-color: #feca57;" text="                                                        Welcome To Login">
+         <font>
+            <Font name="Trebuchet MS" size="24.0" />
+         </font>
+      </Label>
+      <Pane layoutX="264.0" layoutY="132.0" opacity="0.92" prefHeight="451.0" prefWidth="470.0" style="-fx-background-color: #ecf0f1; -fx-background-radius: 35;">
+         <children>
+            <Line endX="364.4000244140625" layoutX="108.0" layoutY="56.0" startX="-108.0" />
+            <TextField fx:id="txName" layoutX="80.0" layoutY="137.0" prefHeight="39.0" prefWidth="328.0" promptText="USER NAME" style="-fx-background-radius: 10;" />
+            <Button fx:id="loginBut" layoutX="185.0" layoutY="391.0" mnemonicParsing="false" onAction="#loginOnAction" prefHeight="38.0" prefWidth="157.0" style="-fx-background-radius: 10; -fx-background-color: #f9ca24;" text="Log In">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Button>
+            <CheckBox layoutX="78.0" layoutY="249.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="132.0" text="Remember me">
+               <font>
+                  <Font name="System Bold Italic" size="14.0" />
+               </font>
+            </CheckBox>
+            <Label layoutX="290.0" layoutY="252.0" text="Forget password ?">
+               <font>
+                  <Font name="System Bold Italic" size="14.0" />
+               </font>
+            </Label>
+            <Line endX="374.5999755859375" endY="-3.0517578125E-5" layoutX="101.0" layoutY="379.0" startX="-100.0" />
+            <Circle fill="WHITE" layoutX="244.0" layoutY="56.0" radius="42.0" stroke="BLACK" strokeType="INSIDE" />
+            <ImageView fitHeight="40.0" fitWidth="45.0" layoutX="224.0" layoutY="36.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons8-user.gif" />
+               </image>
+            </ImageView>
+            <PasswordField fx:id="txtPassword" layoutX="80.0" layoutY="190.0" prefHeight="39.0" prefWidth="328.0" promptText="PASSWORD" style="-fx-background-radius: 10;" />
+            <ImageView fitHeight="25.0" fitWidth="27.0" layoutX="42.0" layoutY="144.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@WhatsApp%20Image%202024-07-15%20at%2015.27.07_2a328ce7.jpg" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="25.0" fitWidth="27.0" layoutX="42.0" layoutY="197.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons8-privacy-48.png" />
+               </image>
+            </ImageView>
+            <Line endX="271.79998779296875" layoutX="127.0" layoutY="137.0" startX="-34.60003662109375" />
+            <Line endX="266.20001220703125" layoutX="127.0" layoutY="190.0" startX="-35.4000244140625" />
+            <Line endX="346.5999755859375" endY="7.62939453125E-6" fill="BLACK" layoutX="101.0" startX="-73.79998779296875" startY="7.62939453125E-6" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

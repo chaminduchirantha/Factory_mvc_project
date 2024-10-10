@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="attendenceAnchorPane" prefHeight="607.0" prefWidth="798.0" style="-fx-background-color: #c8d6e5;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse.factory_mvc_project.controller.AttendenceController">
+   <children>
+      <Label fx:id="lblId" layoutX="30.0" layoutY="95.0" text="Attendence Id">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblEntime" layoutX="30.0" layoutY="151.0" text="Entry Time">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblEXtime" layoutX="30.0" layoutY="201.0" text="Exit Time">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblDate" layoutX="412.0" layoutY="95.0" text="Attendence Date">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="lbEmlId" layoutX="412.0" layoutY="141.0" prefHeight="20.0" prefWidth="105.0" text="Employee Id">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtId" layoutX="141.0" layoutY="93.0" prefHeight="26.0" prefWidth="148.0" />
+      <TextField fx:id="txtEntryTime" layoutX="141.0" layoutY="148.0" prefHeight="26.0" prefWidth="170.0" />
+      <TextField fx:id="txtExiteTime" layoutX="141.0" layoutY="198.0" prefHeight="26.0" prefWidth="170.0" />
+      <TextField fx:id="txtEnployeeId" layoutX="556.0" layoutY="138.0" prefHeight="26.0" prefWidth="139.0" />
+      <Label layoutX="4.0" prefHeight="42.0" prefWidth="798.0" style="-fx-background-color: #dfe6e9;" text="                                                                                          Manage Attendence">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Button fx:id="buttAdd" layoutX="258.0" layoutY="273.0" mnemonicParsing="false" onAction="#addOnAction" style="-fx-background-color: #fbc531;" text="Attendence add">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+      <Button fx:id="buttUpdate" layoutX="523.0" layoutY="273.0" mnemonicParsing="false" onAction="#updateOnAction" style="-fx-background-color: #fbc531;" text="Attendence Update">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+      <Button fx:id="buttRemove" layoutX="375.0" layoutY="273.0" mnemonicParsing="false" onAction="#removeOnAction" style="-fx-background-color: #fbc531;" text="Attendence Remove">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+      <Button fx:id="buttClear" layoutX="662.0" layoutY="272.0" mnemonicParsing="false" onAction="#clearOnActon" prefHeight="26.0" prefWidth="130.0" style="-fx-background-color: #fbc531;" text="Clear">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+      <TableView fx:id="tblAttendence" layoutX="22.0" layoutY="368.0" prefHeight="200.0" prefWidth="765.0" style="-fx-background-color: #b8e994;">
+         <columns>
+            <TableColumn prefWidth="109.60000991821289" text="Attendence Id" />
+            <TableColumn prefWidth="264.00001525878906" text="Attenedence Date" />
+            <TableColumn minWidth="0.0" prefWidth="161.5999755859375" text="Entry Time" />
+            <TableColumn minWidth="0.0" prefWidth="116.7999267578125" text="Exite Time" />
+            <TableColumn prefWidth="127.2000732421875" text="Employee Id" />
+         </columns>
+      </TableView>
+      <DatePicker fx:id="datePicker" layoutX="556.0" layoutY="93.0" promptText="DD-MM-YYYY" />
+   </children>
+</AnchorPane>
