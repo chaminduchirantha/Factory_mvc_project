@@ -2,28 +2,38 @@ package lk.ijse.gdse.factory_mvc_project.model;
 
 import lk.ijse.gdse.factory_mvc_project.db.DBConnection;
 import lk.ijse.gdse.factory_mvc_project.dto.EmployeeDto;
+import lk.ijse.gdse.factory_mvc_project.util.CrudUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class EmployeeModel {
-    public static boolean saveEmployee(EmployeeDto employeeDto) throws SQLException, ClassNotFoundException {
-        Connection connection = DBConnection.getInstance().getConnection();
-        String sql = "insert into employee values(?,?,?,?,?,?,?)";
-        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+//    private CrudUtil CrudUtill;
+    public String getNextEmployeeId() throws SQLException, ClassNotFoundException {
 
-        preparedStatement.setString(1,employeeDto.getEmployeeId());
-        preparedStatement.setString(2,employeeDto.getEmployeeName());
-        preparedStatement.setInt(3,employeeDto.getEmployeeAge());
-        preparedStatement.setString(4,employeeDto.getEmployeeAddress());
-        preparedStatement.setString(5,employeeDto.getEmployeeSection());
-        preparedStatement.setString(6,employeeDto.getEmployeeTask());
-        preparedStatement.setInt(7,employeeDto.getEmployeeContactNumber());
+        ResultSet resultSet = CrudUtil.execute( "select employee_id from employee order by employee_id desc limit 1");
+        if (resultSet.next()) {
+            String customerId = resultSet.getString(1);
+            String subString = customerId.substring(1);
+            int i = Integer.parseInt(subString);
+            int newIndex = i+1;
+            return String.format("C%03d", newIndex);
+        }
+        return "E001";
+    }
 
-        int resp = preparedStatement.executeUpdate();
-        boolean isSaved = resp > 0;
+    public boolean saveEmployee(EmployeeDto employeeDto) throws SQLException, ClassNotFoundException {
+        boolean isSaved =  CrudUtil.execute("insert into employee values(?,?,?,?,?,?,?)" ,
+                employeeDto.getEmployeeId() ,
+                employeeDto.getEmployeeName() ,
+                employeeDto.getEmployeeAge() ,
+                employeeDto.getEmployeeAddress() ,
+                employeeDto.getEmployeeSection(),
+                employeeDto.getEmployeeTask(),
+                employeeDto.getEmployeeContactNumber());
+
         return isSaved;
-
     }
 }
