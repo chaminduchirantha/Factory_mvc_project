@@ -91,8 +91,8 @@ public class HomePageController {
     }
 
     @FXML
-    void payamentonAction(ActionEvent event) {
-
+    void paymentOnAction(ActionEvent event) {
+        navigateTo("/View/PaymentView.fxml");
     }
 
     @FXML
