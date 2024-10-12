@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="PaymentAnchorPane" prefHeight="608.0" prefWidth="798.0" style="-fx-background-color: #c8d6e5;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse.factory_mvc_project.controller.StockController">
+   <children>
+      <Label fx:id="lblDilivaryId" layoutX="492.0" layoutY="128.0" prefHeight="26.0" prefWidth="77.0" text="Dilivary Id">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblDiscount" layoutX="30.0" layoutY="128.0" prefHeight="26.0" prefWidth="135.0" text="Discount">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblPrice" layoutX="30.0" layoutY="179.0" prefHeight="26.0" prefWidth="107.0" text="Payment Price">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtDilivaryId" layoutX="581.0" layoutY="128.0" prefHeight="26.0" prefWidth="174.0" />
+      <TextField fx:id="txtDiscount" layoutX="172.0" layoutY="128.0" prefHeight="26.0" prefWidth="107.0" />
+      <TextField fx:id="txtPrice" layoutX="174.0" layoutY="179.0" prefHeight="26.0" prefWidth="174.0" />
+      <Label prefHeight="40.0" prefWidth="798.0" style="-fx-background-color: #dfe6e9;" text="                                                                                           Manage Payment">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Button fx:id="buttSave" layoutX="387.0" layoutY="255.0" mnemonicParsing="false" onAction="#saveOnAction" prefHeight="26.0" prefWidth="83.0" style="-fx-background-color: #f9ca24;" text="Save">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+      <Button fx:id="buttUpdate" layoutX="480.0" layoutY="255.0" mnemonicParsing="false" onAction="#updateOnAction" prefHeight="26.0" prefWidth="83.0" style="-fx-background-color: #f9ca24;" text="Update">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+      <Button fx:id="buttDelete" layoutX="578.0" layoutY="255.0" mnemonicParsing="false" onAction="#deleteOnAction" prefHeight="26.0" prefWidth="83.0" style="-fx-background-color: #f9ca24;" text="Delete">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+      <Button fx:id="buttClear" layoutX="672.0" layoutY="255.0" mnemonicParsing="false" onAction="#clearONAction" prefHeight="26.0" prefWidth="83.0" style="-fx-background-color: #f9ca24;" text="Clear">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+      <TableView fx:id="tblPayment" layoutX="65.0" layoutY="332.0" prefHeight="200.0" prefWidth="689.0" style="-fx-background-color: #b8e994;">
+         <columns>
+            <TableColumn prefWidth="95.99999618530273" text="Payment Id" />
+            <TableColumn prefWidth="163.1999969482422" text="Payment Date" />
+            <TableColumn prefWidth="117.60003662109375" text="Discount" />
+            <TableColumn prefWidth="143.199951171875" text="Payment Price" />
+            <TableColumn prefWidth="141.60009765625" text="Dilivary Id" />
+         </columns>
+      </TableView>
+      <DatePicker fx:id="paymentDate" layoutX="587.0" layoutY="75.0" promptText="DD - MM - YYYY" />
+      <Label fx:id="lbPaymentDate" layoutX="492.0" layoutY="78.0" text="Payment Date">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="32.0" layoutY="79.0" />
+      <Label fx:id="lblId" layoutX="30.0" layoutY="74.0" prefHeight="26.0" prefWidth="77.0" text="Payment Id">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtCode" layoutX="174.0" layoutY="75.0" prefHeight="26.0" prefWidth="174.0" />
+   </children>
+</AnchorPane>

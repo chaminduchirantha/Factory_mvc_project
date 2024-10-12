@@ -8,66 +8,71 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="homePageAnchorPane" prefHeight="670.0" prefWidth="998.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse.factory_mvc_project.controller.HomePageController">
+<AnchorPane fx:id="homePageAnchorPane" style="-fx-background-color: #c8d6e5;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse.factory_mvc_project.controller.HomePageController">
    <children>
-      <Pane fx:id="OptionPane" layoutY="63.0" prefHeight="610.0" prefWidth="200.0" style="-fx-background-color: #ecf0f1; -fx-background-color: #fff200;">
+      <Pane fx:id="OptionPane" layoutY="63.0" prefHeight="610.0" prefWidth="198.0" style="-fx-background-color: #ecf0f1; -fx-background-color: #fff200;">
          <children>
-            <Button fx:id="buutEmployee" layoutX="21.0" layoutY="58.0" mnemonicParsing="false" onAction="#employeeOnAction" prefHeight="30.0" prefWidth="158.0" style="-fx-background-color: #9980FA;" text="Manage Employee">
+            <Button fx:id="buutEmployee" layoutX="20.0" layoutY="32.0" mnemonicParsing="false" onAction="#employeeOnAction" prefHeight="30.0" prefWidth="158.0" style="-fx-background-color: #9980FA;" text="Manage Employee">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <Button fx:id="buttSalary" layoutX="21.0" layoutY="99.0" mnemonicParsing="false" onAction="#salaryOnAction" prefHeight="30.0" prefWidth="158.0" style="-fx-background-color: #9980FA;" text="Manage Salary">
+            <Button fx:id="buttSalary" layoutX="21.0" layoutY="75.0" mnemonicParsing="false" onAction="#salaryOnAction" prefHeight="30.0" prefWidth="158.0" style="-fx-background-color: #9980FA;" text="Manage Salary">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <Button fx:id="ButtWorkSheet" layoutX="21.0" layoutY="138.0" mnemonicParsing="false" onAction="#worksheetOnAction" prefHeight="30.0" prefWidth="158.0" style="-fx-background-color: #9980FA;" text="Manage worksheet">
+            <Button fx:id="ButtWorkSheet" layoutX="21.0" layoutY="116.0" mnemonicParsing="false" onAction="#worksheetOnAction" prefHeight="30.0" prefWidth="158.0" style="-fx-background-color: #9980FA;" text="Manage worksheet">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <Button fx:id="buttMachine" layoutX="21.0" layoutY="182.0" mnemonicParsing="false" onAction="#machineOnAction" prefHeight="30.0" prefWidth="158.0" style="-fx-background-color: #9980FA;" text="Manage Machines">
+            <Button fx:id="buttMachine" layoutX="21.0" layoutY="199.0" mnemonicParsing="false" onAction="#machineOnAction" prefHeight="30.0" prefWidth="158.0" style="-fx-background-color: #9980FA;" text="Manage Machines">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <Button fx:id="buttAtten" layoutX="21.0" layoutY="225.0" mnemonicParsing="false" onAction="#attendenceOnAction" prefHeight="30.0" prefWidth="158.0" style="-fx-background-color: #9980FA;" text="Manage Attendence">
+            <Button fx:id="buttAtten" layoutX="20.0" layoutY="239.0" mnemonicParsing="false" onAction="#attendenceOnAction" prefHeight="30.0" prefWidth="158.0" style="-fx-background-color: #9980FA;" text="Manage Attendence">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <Button fx:id="buttStock" layoutX="21.0" layoutY="267.0" mnemonicParsing="false" onAction="#stockOnAction" prefHeight="30.0" prefWidth="158.0" style="-fx-background-color: #9980FA;" text="Manage Stock">
+            <Button fx:id="buttStock" layoutX="21.0" layoutY="281.0" mnemonicParsing="false" onAction="#stockOnAction" prefHeight="30.0" prefWidth="158.0" style="-fx-background-color: #9980FA;" text="Manage Stock">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <Button fx:id="buttSupplier" layoutX="21.0" layoutY="309.0" mnemonicParsing="false" onAction="#supplierOnAction" prefHeight="30.0" prefWidth="158.0" style="-fx-background-color: #9980FA;" text="Manage Supplier">
+            <Button fx:id="buttSupplier" layoutX="20.0" layoutY="321.0" mnemonicParsing="false" onAction="#supplierOnAction" prefHeight="30.0" prefWidth="158.0" style="-fx-background-color: #9980FA;" text="Manage Supplier">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <Button fx:id="buttDililvary" layoutX="21.0" layoutY="352.0" mnemonicParsing="false" onAction="#DilivaryOnAction" prefHeight="30.0" prefWidth="158.0" style="-fx-background-color: #9980FA;" text="Manage Dilivary">
+            <Button fx:id="buttDililvary" layoutX="20.0" layoutY="363.0" mnemonicParsing="false" onAction="#DilivaryOnAction" prefHeight="30.0" prefWidth="158.0" style="-fx-background-color: #9980FA;" text="Manage Dilivary">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <Button fx:id="ButtPayment" layoutX="21.0" layoutY="392.0" mnemonicParsing="false" onAction="#payamentonAction" prefHeight="30.0" prefWidth="158.0" style="-fx-background-color: #9980FA;" text="Manage Payment">
+            <Button fx:id="ButtPayment" layoutX="20.0" layoutY="405.0" mnemonicParsing="false" onAction="#paymentOnAction" prefHeight="30.0" prefWidth="158.0" style="-fx-background-color: #9980FA;" text="Manage Payment">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <Button fx:id="buttProduct" layoutX="21.0" layoutY="434.0" mnemonicParsing="false" onAction="#productOnAction" prefHeight="30.0" prefWidth="158.0" style="-fx-background-color: #9980FA;" text="Manage Product">
+            <Button fx:id="buttProduct" layoutX="21.0" layoutY="446.0" mnemonicParsing="false" onAction="#productOnAction" prefHeight="30.0" prefWidth="158.0" style="-fx-background-color: #9980FA;" text="Manage Product">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <Button fx:id="ButtLogOut" layoutX="21.0" layoutY="525.0" mnemonicParsing="false" onAction="#LogOutOnAction" prefHeight="30.0" prefWidth="158.0" style="-fx-background-color: #9980FA;" text="Log Out">
+            <Button fx:id="ButtLogOut" layoutX="21.0" layoutY="527.0" mnemonicParsing="false" onAction="#LogOutOnAction" prefHeight="30.0" prefWidth="158.0" style="-fx-background-color: #9980FA;" text="Log Out">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <Button fx:id="buttProductDetail" layoutX="21.0" layoutY="481.0" mnemonicParsing="false" onAction="#productDetailOnAction" prefHeight="30.0" prefWidth="158.0" style="-fx-background-color: #9980FA;" text="Product Detail">
+            <Button fx:id="buttProductDetail" layoutX="20.0" layoutY="487.0" mnemonicParsing="false" onAction="#productDetailOnAction" prefHeight="30.0" prefWidth="158.0" style="-fx-background-color: #9980FA;" text="Product Detail">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Button>
+            <Button fx:id="ButtPayment1" layoutX="21.0" layoutY="158.0" mnemonicParsing="false" onAction="#paymentOnAction" prefHeight="30.0" prefWidth="158.0" style="-fx-background-color: #9980FA;" text="Manage Branch">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
@@ -79,9 +84,9 @@
             <Font name="System Bold" size="24.0" />
          </font>
       </Label>
-      <AnchorPane fx:id="loadingAnchorPane" layoutX="200.0" layoutY="68.0" prefHeight="610.0" prefWidth="798.0" style="-fx-background-color: #c8d6e5;">
+      <AnchorPane fx:id="loadingAnchorPane" layoutX="200.0" layoutY="63.2" style="-fx-background-color: #c8d6e5;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="63.0">
          <children>
-            <ImageView fitHeight="459.0" fitWidth="798.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="502.0" fitWidth="798.0" layoutY="79.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@garment%20Factory.jpg" />
                </image>
