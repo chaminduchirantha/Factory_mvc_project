@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #81ecec;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse.factory_mvc_project.controller.LogOutController">
+   <children>
+      <Pane layoutX="61.0" layoutY="30.0" prefHeight="164.0" prefWidth="478.0" style="-fx-background-radius: 20; -fx-background-color: #64B5F6;">
+         <children>
+            <Text layoutX="56.0" layoutY="72.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Log out Succesesfully &#10;             😊😊&#10;&#10;" wrappingWidth="392.73046875">
+               <font>
+                  <Font name="Segoe Print" size="36.0" />
+               </font>
+               <fill>
+                  <LinearGradient endX="1.0" endY="1.0" startY="1.0">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color red="0.120899997651577" green="0.9300000071525574" blue="0.4285222291946411" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </LinearGradient>
+               </fill>
+            </Text>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
