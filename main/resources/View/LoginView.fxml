@@ -2,7 +2,6 @@
 
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
@@ -63,11 +62,6 @@
                   <Image url="@../Image/icons8-privacy-48.png" />
                </image>
             </ImageView>
-            <CheckBox fx:id="checkPassword" layoutX="55.0" layoutY="258.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="128.0" text="Show Password">
-               <font>
-                  <Font name="Calibri Bold" size="14.0" />
-               </font>
-            </CheckBox>
          </children>
          <effect>
             <InnerShadow />
