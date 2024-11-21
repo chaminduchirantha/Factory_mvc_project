@@ -1,5 +1,6 @@
 package lk.ijse.gdse.factory_mvc_project.controller;
 
+import javafx.animation.TranslateTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -9,9 +10,10 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.util.Duration;
 import lk.ijse.gdse.factory_mvc_project.dto.AttendenceDto;
+import lk.ijse.gdse.factory_mvc_project.dto.EmployeeDto;
 import lk.ijse.gdse.factory_mvc_project.dto.tm.AttendenceTm;
-import lk.ijse.gdse.factory_mvc_project.dto.tm.SalaryTm;
 import lk.ijse.gdse.factory_mvc_project.model.AttendenceModel;
 import lk.ijse.gdse.factory_mvc_project.model.EmployeeModel;
 
@@ -24,36 +26,7 @@ import java.util.ResourceBundle;
 
 public class AttendenceController implements Initializable {
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        colomnId.setCellValueFactory(new PropertyValueFactory<>("attendenceId"));
-        colomnAttendenceDate.setCellValueFactory(new PropertyValueFactory<>("attendenceDate"));
-        colomnEntryTmie.setCellValueFactory(new PropertyValueFactory<>("entryTime"));
-        colomnExiteTime.setCellValueFactory(new PropertyValueFactory<>("exitTime"));
-        colomnEmployeId.setCellValueFactory(new PropertyValueFactory<>("employeeId"));
 
-        try {
-            loadNextAttendanceId();
-            loadNextEmployeeId();
-            refreshPage();
-        } catch (Exception e) {
-            e.printStackTrace();
-            new Alert(Alert.AlertType.ERROR, "Fail to load Attendance ID");
-
-        }
-    }
-
-    EmployeeModel employeeModel = new EmployeeModel();
-
-    private void loadNextAttendanceId() throws SQLException, ClassNotFoundException {
-        String nextAttendanceId = attendenceModel.getNextAttendenceId();
-        txtId.setText(nextAttendanceId);
-    }
-
-    private void loadNextEmployeeId() throws SQLException, ClassNotFoundException {
-        String nextEmployeeId =employeeModel.getNextEmployeeId();
-        txtEnployeeId.setText(nextEmployeeId);
-    }
 
 
     @FXML
@@ -66,13 +39,25 @@ public class AttendenceController implements Initializable {
     private Button buttClear;
 
     @FXML
+    private ComboBox<String> cmbEmployeeContactNumber;
+
+    @FXML
+    private ComboBox<String> cmbShiftType;
+
+    @FXML
     private Button buttRemove;
 
     @FXML
     private Button buttUpdate;
 
     @FXML
-    private Label lbEmlId;
+    private Label lblEmName;
+
+    @FXML
+    private Label lblEmName1;
+
+    @FXML
+    private Label lblEId;
 
     @FXML
     private Label lblDate;
@@ -102,6 +87,9 @@ public class AttendenceController implements Initializable {
     private TableColumn<AttendenceTm, String> colomnExiteTime;
 
     @FXML
+    private TableColumn<?, ?> colomnShiftType;
+
+    @FXML
     private TableColumn<AttendenceTm, String> colomnId;
 
     @FXML
@@ -120,125 +108,262 @@ public class AttendenceController implements Initializable {
     private TextField txtId;
 
     @FXML
-    void addOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
-        String AttendenceId = txtId.getText();
-        String entryTime = txtEntryTime.getText();
-        String exitTime = txtExiteTime.getText();
-        LocalDate attendenceDate = datePicker.getValue();
-        String employeeId = txtEnployeeId.getText();
+    private TextField txtEmId;
 
-        AttendenceModel attendenceModel = new AttendenceModel();
-
-        AttendenceDto attendenceDto = new AttendenceDto(AttendenceId, entryTime, exitTime, attendenceDate, employeeId);
-
-        boolean isSaved = attendenceModel.saveAttendence(attendenceDto);
-        if (isSaved) {
-            refreshPage();
-            new Alert(Alert.AlertType.INFORMATION, "Successfully saved the Attendece").show();
-            loadTableData();
-        } else {
-            new Alert(Alert.AlertType.ERROR, "Fail to save the Attendence").show();
-        }
-    }
-
+    EmployeeModel employeeModel = new EmployeeModel();
     AttendenceModel attendenceModel = new AttendenceModel();
-    private void loadTableData() throws SQLException, ClassNotFoundException {
-        ArrayList<AttendenceDto> attendenceDtos = attendenceModel.getAllAttendence();
 
-        ObservableList<AttendenceTm> attendenceTms = FXCollections.observableArrayList();
 
-        for (AttendenceDto attendenceDto : attendenceDtos) {
-            AttendenceTm attendenceTm = new AttendenceTm(
-                    attendenceDto.getAttendenceId(),
-                    attendenceDto.getEntryTime(),
-                    attendenceDto.getExitTime(),
-                    attendenceDto.getAttendenceDate(),
-                    attendenceDto.getEmployeeId()
 
-            );
-            attendenceTms.add(attendenceTm);
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        colomnId.setCellValueFactory(new PropertyValueFactory<>("attendenceId"));
+        colomnAttendenceDate.setCellValueFactory(new PropertyValueFactory<>("attendenceDate"));
+        colomnEntryTmie.setCellValueFactory(new PropertyValueFactory<>("entryTime"));
+        colomnExiteTime.setCellValueFactory(new PropertyValueFactory<>("exitTime"));
+        colomnShiftType.setCellValueFactory(new PropertyValueFactory<>("shiftType"));
+        colomnEmployeId.setCellValueFactory(new PropertyValueFactory<>("employeeId"));
+
+        TranslateTransition slider = new TranslateTransition();
+        slider.setNode(attendenceAnchorPane);
+        slider.setDuration(Duration.seconds(1.0));
+        slider.setFromX(-200);
+        slider.setToX(0);
+        slider.play();
+
+        try {
+            loadNextAttendanceId();
+            refreshPage();
+            loadEmployeeContactNumber();
+            loadNextEmployeeId();
+            loadCmb();
+        } catch (Exception e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Fail to load Attendance ID");
+
         }
-        tblAttendence.setItems(attendenceTms);
     }
 
+    private void loadNextAttendanceId(){
+        try {
+            String nextAttendanceId = attendenceModel.getNextAttendenceId();
+            txtId.setText(nextAttendanceId);
+        }catch (SQLException | ClassNotFoundException e) {
+            new Alert(Alert.AlertType.ERROR, "Attendence Not Found").show();
+        }
+    }
 
-    private void refreshPage() throws SQLException, ClassNotFoundException {
+    private void loadNextEmployeeId(){
+        try {
+            String nextAttendanceId = employeeModel.getNextEmployeeId();
+            txtEmId.setText(nextAttendanceId);
+        }catch (SQLException | ClassNotFoundException e) {
+            new Alert(Alert.AlertType.ERROR, "Attendence Not Found").show();
+        }
+    }
 
-        loadNextAttendanceId();
-        loadTableData();
-
-        buttAdd.setDisable(false);
-
-        buttUpdate.setDisable(true);
-        buttRemove.setDisable(true);
-
-        txtEntryTime.setText("");
-        txtExiteTime.setText("");
-        datePicker.setTooltip(new Tooltip("Date"));
-        txtEnployeeId.setText("");
-
+    private void loadCmb(){
+        String [] shiftTypes = {"Day" , "Night" , "Flexible"};
+        cmbShiftType.getItems().addAll(shiftTypes);
     }
 
     @FXML
-    void clearOnActon(ActionEvent event) throws SQLException, ClassNotFoundException {
-        refreshPage();
+    void addOnAction(ActionEvent event){
+        try {
+            String AttendenceId = txtId.getText();
+            String entryTime = txtEntryTime.getText();
+            String exitTime = txtExiteTime.getText();
+            LocalDate attendenceDate = datePicker.getValue();
+            String shiftType = cmbShiftType.getValue();
+            String employeeId = txtEmId.getText();
 
-    }
+            AttendenceModel attendenceModel = new AttendenceModel();
 
-    @FXML
-    void removeOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
-        String attendanceId = txtId.getText();
+            AttendenceDto attendenceDto = new AttendenceDto(AttendenceId, entryTime, exitTime, attendenceDate, shiftType, employeeId);
 
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION , "Are you sure you want to delete this Attendance?" , ButtonType.YES , ButtonType.NO);
-        Optional<ButtonType> optionalButtonType = alert.showAndWait();
-
-        if (optionalButtonType.isPresent() && optionalButtonType.get() == ButtonType.YES) {
-            boolean isDeleted = attendenceModel.deleteAttendence(attendanceId);
-            if (isDeleted) {
+            boolean isSaved = attendenceModel.saveAttendence(attendenceDto);
+            if (isSaved) {
                 refreshPage();
-                new Alert(Alert.AlertType.INFORMATION , "Attendance deleted").show();
+                new Alert(Alert.AlertType.INFORMATION, "Successfully saved the Attendece").show();
                 loadTableData();
-
-            }else{
-                new Alert(Alert.AlertType.ERROR , "Attendance not deleted").show();
+            } else {
+                new Alert(Alert.AlertType.ERROR, "Fail to save the Attendence").show();
             }
+        } catch (SQLException | ClassNotFoundException e) {
+            new Alert(Alert.AlertType.ERROR, "Attendence Not Found").show();
+        }
+    }
+
+
+    private void loadTableData(){
+        try {
+            ArrayList<AttendenceDto> attendenceDtos = attendenceModel.getAllAttendence();
+
+            ObservableList<AttendenceTm> attendenceTms = FXCollections.observableArrayList();
+
+            for (AttendenceDto attendenceDto : attendenceDtos) {
+                AttendenceTm attendenceTm = new AttendenceTm(
+                        attendenceDto.getAttendenceId(),
+                        attendenceDto.getEntryTime(),
+                        attendenceDto.getExitTime(),
+                        attendenceDto.getAttendenceDate(),
+                        attendenceDto.getShiftType(),
+                        attendenceDto.getEmployeeId()
+
+                );
+                attendenceTms.add(attendenceTm);
+            }
+            tblAttendence.setItems(attendenceTms);
+        } catch (SQLException | ClassNotFoundException e) {
+            new Alert(Alert.AlertType.ERROR, "Attendence Not Found").show();
+        }
+    }
+
+
+    private void refreshPage(){
+        try {
+            loadNextAttendanceId();
+            loadTableData();
+
+            buttAdd.setDisable(false);
+
+            buttUpdate.setDisable(true);
+            buttRemove.setDisable(true);
+
+            txtEntryTime.setText("");
+            txtExiteTime.setText("");
+            datePicker.setTooltip(new Tooltip("Date"));
+            cmbShiftType.setValue("");
+            lblEmName.setText("");
+            lblEId.setText("");
+            cmbEmployeeContactNumber.setValue("");
+
+        } catch (Exception e) {
+            new Alert(Alert.AlertType.ERROR, "Attendence Not Found").show();
+        }
+    }
+
+    @FXML
+    void clearOnActon(ActionEvent event)  {
+        try {
+            refreshPage();
+        }catch (Exception e){
+            new Alert(Alert.AlertType.ERROR, "Attendence Not Found").show();
+        }
+    }
+
+    @FXML
+    void removeOnAction(ActionEvent event){
+        try {
+            String attendanceId = txtId.getText();
+
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete this Attendance?", ButtonType.YES, ButtonType.NO);
+            Optional<ButtonType> optionalButtonType = alert.showAndWait();
+
+            if (optionalButtonType.isPresent() && optionalButtonType.get() == ButtonType.YES) {
+                boolean isDeleted = attendenceModel.deleteAttendence(attendanceId);
+                if (isDeleted) {
+                    refreshPage();
+                    new Alert(Alert.AlertType.INFORMATION, "Attendance deleted").show();
+                    loadTableData();
+
+                } else {
+                    new Alert(Alert.AlertType.ERROR, "Attendance not deleted").show();
+                }
+            }
+        }catch (SQLException | ClassNotFoundException e) {
+            new Alert(Alert.AlertType.ERROR, "Attendence Not Found").show();
         }
     }
 
     @FXML
     void updateOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
-        String AttendenceId = txtId.getText();
-        String entryTime = txtEntryTime.getText();
-        String exitTime = txtExiteTime.getText();
-        LocalDate attendenceDate = datePicker.getValue();
-        String employeeId = txtEnployeeId.getText();
+        try {
+            String AttendenceId = txtId.getText();
+            String entryTime = txtEntryTime.getText();
+            String exitTime = txtExiteTime.getText();
+            LocalDate attendenceDate = datePicker.getValue();
+            String shiftType = cmbShiftType.getValue();
+            String employeeId = txtEmId.getText();
 
-        AttendenceDto attendenceDto = new AttendenceDto(AttendenceId, entryTime, exitTime, attendenceDate, employeeId);
+            AttendenceDto attendenceDto = new AttendenceDto(AttendenceId,
+                    entryTime,
+                    exitTime,
+                    attendenceDate,
+                    shiftType,
+                    employeeId
+            );
 
-        boolean isUpdate = attendenceModel.deleteAttendence(String.valueOf(attendenceDto));
-        if (isUpdate) {
-           refreshPage();
-            new Alert(Alert.AlertType.INFORMATION, "Successfully Update the Attendance").show();
-            loadTableData();
-        } else {
-            new Alert(Alert.AlertType.ERROR, "Fail to update the Attendance").show();
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to Update this Attendance?", ButtonType.YES, ButtonType.NO);
+            Optional<ButtonType> optionalButtonType = alert.showAndWait();
+
+            if (optionalButtonType.isPresent() && optionalButtonType.get() == ButtonType.YES) {
+
+                boolean isUpdate = attendenceModel.updateAttendence(attendenceDto);
+                if (isUpdate) {
+                    refreshPage();
+                    new Alert(Alert.AlertType.INFORMATION, "Successfully Update the Attendance").show();
+                    loadTableData();
+                } else {
+                    new Alert(Alert.AlertType.ERROR, "Fail to update the Attendance").show();
+                }
+            }
+        }catch (SQLException | ClassNotFoundException e) {
+            new Alert(Alert.AlertType.ERROR, "Attendence Not Found").show();
         }
     }
-    @FXML
-    void tblOnMouseClick(MouseEvent event) throws SQLException, ClassNotFoundException {
-        AttendenceTm attendenceTm = tblAttendence.getSelectionModel().getSelectedItem();
-        if (attendenceTm != null) {
-            txtId.setText(attendenceTm.getAttendenceId());
-            txtEntryTime.setText(attendenceTm.getEntryTime());
-            txtExiteTime.setText(attendenceTm.getExitTime());
-            datePicker.setValue(attendenceTm.getAttendenceDate());
-            txtEnployeeId.setText(attendenceTm.getEmployeeId());
 
-            buttAdd.setDisable(true);
-            buttRemove.setDisable(false);
-            buttUpdate.setDisable(false);
-            loadTableData();
+    public void tblMouseClick(MouseEvent mouseEvent){
+
+    }
+
+    public void tblOnMouseClick(MouseEvent mouseEvent) {
+        try {
+            AttendenceTm attendenceTm = tblAttendence.getSelectionModel().getSelectedItem();
+            if (attendenceTm != null) {
+                txtId.setText(attendenceTm.getAttendenceId());
+                txtEntryTime.setText(attendenceTm.getEntryTime());
+                txtExiteTime.setText(attendenceTm.getExitTime());
+                datePicker.setValue(attendenceTm.getAttendenceDate());
+                cmbShiftType.setValue(attendenceTm.getShiftType());
+                txtEmId.setText(attendenceTm.getEmployeeId());
+
+                buttAdd.setDisable(true);
+                buttRemove.setDisable(false);
+                buttUpdate.setDisable(false);
+                loadTableData();
+            }
+        }catch (Exception e) {
+            new Alert(Alert.AlertType.ERROR, "Attendence Not Found").show();
+        }
+    }
+
+    private void loadEmployeeContactNumber(){
+        try {
+            ArrayList<String> employeeIDs = employeeModel.getAllEmployeeContactNumbers();
+            ObservableList<String> observableList = FXCollections.observableArrayList();
+            observableList.addAll(employeeIDs);
+            cmbEmployeeContactNumber.setItems(observableList);
+        }catch (SQLException | ClassNotFoundException e) {
+            new Alert(Alert.AlertType.ERROR, "Employee Not Found").show();
+        }
+    }
+
+    @FXML
+    void cmbEmployeeOnAction(ActionEvent event) {
+        try {
+            String selectedCustomerId = cmbEmployeeContactNumber.getSelectionModel().getSelectedItem();
+            EmployeeDto employeeDto = employeeModel.findByContactNumber(selectedCustomerId);
+
+            if (employeeDto != null) {
+
+                lblEmName.setText(employeeDto.getEmployeeName());
+                lblEId.setText(employeeDto.getEmployeeId());
+
+            }
+
+        } catch (SQLException | ClassNotFoundException e) {
+            new Alert(Alert.AlertType.ERROR, "Employee Not Found").show();
         }
     }
 }
-
