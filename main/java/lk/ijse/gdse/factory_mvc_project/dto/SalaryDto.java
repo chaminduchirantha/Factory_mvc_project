@@ -14,5 +14,6 @@ public class SalaryDto {
     private String salaryFees;
     private LocalDate salaryReleaseDate;
     private String basicSalary;
+    private String paymentMethod;
     private String employeeId;
 }

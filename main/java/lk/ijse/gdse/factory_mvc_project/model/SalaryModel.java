@@ -23,13 +23,14 @@ public class SalaryModel {
     }
     public boolean saveSalary(SalaryDto salaryDto) throws SQLException, ClassNotFoundException {
         Connection connection = DBConnection.getInstance().getConnection();
-        String sql = "insert into salary values(?,?,?,?,?)";
+        String sql = "insert into salary values(?,?,?,?,?,?)";
         PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, salaryDto.getSalaryId());
             statement.setString(2, salaryDto.getSalaryFees());
             statement.setDate(3, Date.valueOf(salaryDto.getSalaryReleaseDate()));
             statement.setString(4, salaryDto.getBasicSalary());
-            statement.setString(5, salaryDto.getEmployeeId());
+            statement.setString(5, salaryDto.getPaymentMethod());
+            statement.setString(6, salaryDto.getEmployeeId());
 
             int isSaved = statement.executeUpdate();
             return isSaved > 0;
@@ -45,6 +46,7 @@ public class SalaryModel {
                 salaryDto.setSalaryFees(rst.getString("salary_fees"));
                 salaryDto.setSalaryReleaseDate(rst.getDate("salary_release_date").toLocalDate());
                 salaryDto.setBasicSalary(rst.getString("basic_salary"));
+                salaryDto.setPaymentMethod(rst.getString("payment_method"));
                 salaryDto.setEmployeeId(rst.getString("employee_id"));
 
             salaryDtos.add(salaryDto);
@@ -54,13 +56,14 @@ public class SalaryModel {
 
     public boolean updateSalary(SalaryDto salaryDto) throws SQLException, ClassNotFoundException {
         Connection connection = DBConnection.getInstance().getConnection();
-        String sql = "update salary set salary_fees=? , salary_release_date=?,basic_salary=?, employee_id=? where salary_id=?";
+        String sql = "update salary set salary_fees=? , salary_release_date=?,basic_salary=?,payment_method=?, employee_id=? where salary_id=?";
         PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, salaryDto.getSalaryFees());
             statement.setDate(2, Date.valueOf(String.valueOf(Date.valueOf(salaryDto.getSalaryReleaseDate()))));
             statement.setString(3, salaryDto.getBasicSalary());
-            statement.setString(4, salaryDto.getEmployeeId());
-            statement.setString(5, salaryDto.getSalaryId());
+            statement.setString(4, salaryDto.getPaymentMethod());
+            statement.setString(5, salaryDto.getEmployeeId());
+            statement.setString(6, salaryDto.getSalaryId());
 
             int isUpdate = statement.executeUpdate();
             return isUpdate > 0;

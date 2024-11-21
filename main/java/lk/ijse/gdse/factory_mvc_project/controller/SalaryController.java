@@ -1,5 +1,6 @@
 package lk.ijse.gdse.factory_mvc_project.controller;
 
+import javafx.animation.TranslateTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -9,9 +10,9 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.util.Duration;
 import lk.ijse.gdse.factory_mvc_project.dto.EmployeeDto;
 import lk.ijse.gdse.factory_mvc_project.dto.SalaryDto;
-import lk.ijse.gdse.factory_mvc_project.dto.tm.EmployeeTm;
 import lk.ijse.gdse.factory_mvc_project.dto.tm.SalaryTm;
 import lk.ijse.gdse.factory_mvc_project.model.EmployeeModel;
 import lk.ijse.gdse.factory_mvc_project.model.SalaryModel;
@@ -25,38 +26,7 @@ import java.util.ResourceBundle;
 
 public class SalaryController implements Initializable {
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        colomnId.setCellValueFactory(new PropertyValueFactory<>("salaryId"));
-        colomnReleasDate.setCellValueFactory(new PropertyValueFactory<>("salaryReleaseDate"));
-        colomnSalaryFees.setCellValueFactory(new PropertyValueFactory<>("salaryFees"));
-        colomnBasicSalary.setCellValueFactory(new PropertyValueFactory<>("basicSalary"));
-        colomnEmployeeId.setCellValueFactory(new PropertyValueFactory<>("employeeId"));
 
-        try {
-            loadNextSalaryId();
-            loadNextEmployeeId();
-            loadTableData();
-
-        }catch (Exception e){
-            e.printStackTrace();
-
-        }
-    }
-
-    SalaryModel salaryModel = new SalaryModel();
-    EmployeeModel employeeModel = new EmployeeModel();
-
-    private void loadNextSalaryId() throws SQLException, ClassNotFoundException {
-
-        String nextSalaryId = salaryModel.getNextSalaryId();
-        txtId.setText(nextSalaryId);
-    }
-
-    private void loadNextEmployeeId() throws SQLException, ClassNotFoundException {
-        String nextEmployeeId =employeeModel.getNextEmployeeId();
-        txtEmId.setText(nextEmployeeId);
-    }
 
     @FXML
     private Button buttAdd;
@@ -80,6 +50,9 @@ public class SalaryController implements Initializable {
     private Label lblEmId;
 
     @FXML
+    private Label lblName;
+
+    @FXML
     private Label lblFees;
 
     @FXML
@@ -89,7 +62,19 @@ public class SalaryController implements Initializable {
     private AnchorPane salaryAnchorPane;
 
     @FXML
+    private ComboBox<String> cmbPaymentMethod;
+
+    @FXML
     private TableView<SalaryTm> tblSalary;
+
+    @FXML
+    private ComboBox<String> cmbEmployeeContactNumber;
+
+    @FXML
+    private Label lblEmName;
+
+    @FXML
+    private Label lblEmName1;
 
     @FXML
     private TableColumn<SalaryTm, String> colomnBasicSalary;
@@ -102,6 +87,9 @@ public class SalaryController implements Initializable {
 
     @FXML
     private TableColumn<SalaryTm, String> colomnReleasDate;
+
+    @FXML
+    private TableColumn<SalaryTm, String> colomnMethod;
 
     @FXML
     private TableColumn<SalaryTm, String> colomnSalaryFees;
@@ -121,46 +109,122 @@ public class SalaryController implements Initializable {
     @FXML
     private TextField txtSalary;
 
-    @FXML
-    void addOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
-        String salaryId = txtId.getText();
-        String salaryFees = txtFees.getText();
-        LocalDate salaryReleaseDate = txtDate.getValue();
-        String basicSalary = txtSalary.getText();
-        String employeeId = txtEmId.getText();
+    SalaryModel salaryModel = new SalaryModel();
+    EmployeeModel employeeModel = new EmployeeModel();
 
-        SalaryDto salaryDto = new SalaryDto(salaryId , salaryFees , salaryReleaseDate , basicSalary , employeeId);
-        boolean isSaved = salaryModel.saveSalary(salaryDto);
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        colomnId.setCellValueFactory(new PropertyValueFactory<>("salaryId"));
+        colomnReleasDate.setCellValueFactory(new PropertyValueFactory<>("salaryReleaseDate"));
+        colomnSalaryFees.setCellValueFactory(new PropertyValueFactory<>("salaryFees"));
+        colomnBasicSalary.setCellValueFactory(new PropertyValueFactory<>("basicSalary"));
+        colomnMethod.setCellValueFactory(new PropertyValueFactory<>("paymentMethod"));
+        colomnEmployeeId.setCellValueFactory(new PropertyValueFactory<>("employeeId"));
 
-        if(isSaved){
-            new Alert(Alert.AlertType.INFORMATION,"Salary added successfully").show();
+        TranslateTransition slider = new TranslateTransition();
+        slider.setNode(salaryAnchorPane);
+        slider.setDuration(Duration.seconds(1.0));
+        slider.setFromX(-200);
+        slider.setToX(0);
+        slider.play();
+
+        try {
+            loadNextSalaryId();
             loadTableData();
-        }else {
-            new Alert(Alert.AlertType.ERROR, "Salary not added successfully").show();
+            loadEmployeeContactNumber();
+            loadNextEmployeeId();
+            loadCmb();
+
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
 
-    private void loadTableData() throws SQLException, ClassNotFoundException {
-        ArrayList<SalaryDto> salaryDtos = salaryModel.getAllSalary();
+    private void loadNextSalaryId() {
+        try {
+            String nextSalaryId = salaryModel.getNextSalaryId();
+            txtId.setText(nextSalaryId);
+        } catch (SQLException | ClassNotFoundException e) {
+            new Alert(Alert.AlertType.ERROR, "Salary not found").show();
+        }
+    }
 
-        ObservableList<SalaryTm> salaryTms = FXCollections.observableArrayList();
+    private void loadNextEmployeeId() {
+        try {
+            String nextSalaryId = employeeModel.getNextEmployeeId();
+            txtEmId.setText(nextSalaryId);
+        } catch (SQLException | ClassNotFoundException e) {
+            new Alert(Alert.AlertType.ERROR, "Salary not found").show();
+        }
+    }
 
-        for (SalaryDto salaryDto : salaryDtos) {
-            SalaryTm salaryTm = new SalaryTm(
-                    salaryDto.getSalaryId(),
-                    salaryDto.getSalaryFees(),
-                    salaryDto.getSalaryReleaseDate(),
-                    salaryDto.getBasicSalary(),
-                    salaryDto.getEmployeeId()
+    private void loadCmb(){
+        String[] methods = {"Cash" , "Bank Account" , "cheque"};
+        cmbPaymentMethod.getItems().addAll(methods);
 
+    }
+
+
+    @FXML
+    void addOnAction(ActionEvent event){
+        try {
+            String salaryId = txtId.getText();
+            String salaryFees = txtFees.getText();
+            LocalDate salaryReleaseDate = txtDate.getValue();
+            String basicSalary = txtSalary.getText();
+            String paymentMethod = cmbPaymentMethod.getValue();
+            String employeeId = txtEmId.getText();
+
+            SalaryDto salaryDto = new SalaryDto(
+                    salaryId ,
+                    salaryFees ,
+                    salaryReleaseDate ,
+                    basicSalary ,
+                    paymentMethod,
+                    employeeId
             );
-            salaryTms.add(salaryTm);
+
+            boolean isSaved = salaryModel.saveSalary(salaryDto);
+
+            if(isSaved){
+                new Alert(Alert.AlertType.INFORMATION,"Salary added successfully").show();
+                loadTableData();
+            }else {
+                new Alert(Alert.AlertType.ERROR, "Salary not added successfully").show();
+            }
+
+        } catch (Exception e) {
+            new Alert(Alert.AlertType.ERROR, "Salary not found").show();
         }
-        tblSalary.setItems(salaryTms);
     }
 
-    private void refreshPage() throws SQLException, ClassNotFoundException {
+    private void loadTableData(){
+        try {
+            ArrayList<SalaryDto> salaryDtos = salaryModel.getAllSalary();
 
+            ObservableList<SalaryTm> salaryTms = FXCollections.observableArrayList();
+
+            for (SalaryDto salaryDto : salaryDtos) {
+                SalaryTm salaryTm = new SalaryTm(
+                        salaryDto.getSalaryId(),
+                        salaryDto.getSalaryFees(),
+                        salaryDto.getSalaryReleaseDate(),
+                        salaryDto.getBasicSalary(),
+                        salaryDto.getPaymentMethod(),
+                        salaryDto.getEmployeeId()
+
+                );
+                salaryTms.add(salaryTm);
+            }
+            tblSalary.setItems(salaryTms);
+
+        } catch (SQLException | ClassNotFoundException e) {
+            new Alert(Alert.AlertType.ERROR, "Salary not found").show();
+        }
+    }
+
+
+    private void refreshPage(){
         loadNextSalaryId();
 
         buttAdd.setDisable(false);
@@ -172,73 +236,123 @@ public class SalaryController implements Initializable {
         txtFees.setText("");
         txtDate.setTooltip(new Tooltip("Date"));
         txtSalary.setText("");
-        txtEmId.setText("");
-
+        cmbPaymentMethod.setValue("");
+         lblEmName.setText("");
+         lblEmId.setText("");
+        cmbEmployeeContactNumber.setValue("");
     }
 
     @FXML
-    void clearOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
-        refreshPage();
-
-    }
-
-    @FXML
-    void removeOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
-        String salaryId = txtId.getText();
-
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION , "Are you sure you want to delete this salary?" , ButtonType.YES , ButtonType.NO);
-        Optional<ButtonType> optionalButtonType = alert.showAndWait();
-
-        if (optionalButtonType.isPresent() && optionalButtonType.get() == ButtonType.YES) {
-            boolean isDeleted = salaryModel.deleteSalary(salaryId);
-            if (isDeleted) {
+    void clearOnAction(ActionEvent event) {
+        try {
                 refreshPage();
-                new Alert(Alert.AlertType.INFORMATION , "Salary deleted").show();
-                loadTableData();
+            } catch (Exception e) {
+            new Alert(Alert.AlertType.ERROR, "Salary not found").show();
+        }
+    }
 
-            }else{
-                new Alert(Alert.AlertType.ERROR , "Salary not deleted").show();
+    @FXML
+    void removeOnAction(ActionEvent event){
+        try {
+            String salaryId = txtId.getText();
+
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION , "Are you sure you want to delete this salary?" , ButtonType.YES , ButtonType.NO);
+            Optional<ButtonType> optionalButtonType = alert.showAndWait();
+
+            if (optionalButtonType.isPresent() && optionalButtonType.get() == ButtonType.YES) {
+                boolean isDeleted = salaryModel.deleteSalary(salaryId);
+                if (isDeleted) {
+                    refreshPage();
+                    new Alert(Alert.AlertType.INFORMATION , "Salary deleted").show();
+                    loadTableData();
+
+                }else{
+                    new Alert(Alert.AlertType.ERROR , "Salary not deleted").show();
+                }
             }
+
+        } catch (SQLException | ClassNotFoundException e) {
+            new Alert(Alert.AlertType.ERROR, "Salary not found").show();
         }
     }
 
     @FXML
-    void updateOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
-        String salaryId = txtId.getText();
-        String salaryFees = txtFees.getText();
-        LocalDate salaryReleaseDate = txtDate.getValue();
-        String basicSalary = txtSalary.getText();
-        String employeeId = txtEmId.getText();
+    void updateOnAction(ActionEvent event){
+        try {
+            String salaryId = txtId.getText();
+            String salaryFees = txtFees.getText();
+            LocalDate salaryReleaseDate = txtDate.getValue();
+            String basicSalary = txtSalary.getText();
+            String paymentMethod = cmbPaymentMethod.getValue();
+            String employeeId = txtEmId.getText();
 
-        if (salaryReleaseDate == null) {
-            new Alert(Alert.AlertType.ERROR, "Please select a valid salary release date").show();
-            return;
-        }
+            if (salaryReleaseDate == null) {
+                new Alert(Alert.AlertType.ERROR, "Please select a valid salary release date").show();
+                return;
+            }
 
-        SalaryDto salaryDto = new SalaryDto(salaryId , salaryFees , salaryReleaseDate , basicSalary , employeeId);
-        boolean isUpdate = salaryModel.updateSalary(salaryDto);
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION , "Are you sure you want to Update this salary?" , ButtonType.YES , ButtonType.NO);
+            Optional<ButtonType> optionalButtonType = alert.showAndWait();
 
-        if(isUpdate){
-            new Alert(Alert.AlertType.INFORMATION,"Salary update successfully").show();
-            loadTableData();
-        }else {
-            new Alert(Alert.AlertType.ERROR, "Salary not update successfully").show();
+            if (optionalButtonType.isPresent() && optionalButtonType.get() == ButtonType.YES) {
+                SalaryDto salaryDto = new SalaryDto(
+                        salaryId,
+                        salaryFees,
+                        salaryReleaseDate,
+                        basicSalary,
+                        paymentMethod,
+                        employeeId
+                );
+
+                boolean isUpdate = salaryModel.updateSalary(salaryDto);
+
+                if (isUpdate) {
+                    new Alert(Alert.AlertType.INFORMATION, "Salary update successfully").show();
+                    loadTableData();
+                } else {
+                    new Alert(Alert.AlertType.ERROR, "Salary not update successfully").show();
+                }
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            new Alert(Alert.AlertType.ERROR, "Salary not found").show();
         }
     }
+
     @FXML
-    void salaryOnMouseClicked(MouseEvent event) throws SQLException, ClassNotFoundException {
+    void salaryOnMouseClicked(MouseEvent event){
         SalaryTm salaryTm = tblSalary.getSelectionModel().getSelectedItem();
         if (salaryTm != null) {
             txtId.setText(salaryTm.getSalaryId());
             txtFees.setText(salaryTm.getSalaryFees());
             txtDate.setValue(salaryTm.getSalaryReleaseDate());
             txtSalary.setText(salaryTm.getBasicSalary());
+            cmbPaymentMethod.setValue(salaryTm.getPaymentMethod());
             txtEmId.setText(salaryTm.getEmployeeId());
 
             buttAdd.setDisable(true);
             buttRemove.setDisable(false);
             buttUpdate.setDisable(false);
             loadTableData();
+        }
+    }
+
+    private void loadEmployeeContactNumber() throws SQLException, ClassNotFoundException {
+        ArrayList<String> employeeIDs = employeeModel.getAllEmployeeContactNumbers();
+        ObservableList<String> observableList = FXCollections.observableArrayList();
+        observableList.addAll(employeeIDs);
+        cmbEmployeeContactNumber.setItems(observableList);
+    }
+
+
+    @FXML
+    void cmbEmployeeOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
+        String selectedCustomerId = cmbEmployeeContactNumber.getSelectionModel().getSelectedItem();
+        EmployeeDto employeeDto = employeeModel.findByContactNumber(selectedCustomerId);
+
+        if (employeeDto != null) {
+
+            lblEmName.setText(employeeDto.getEmployeeName());
+            lblEmId.setText(employeeDto.getEmployeeId());
         }
     }
 }
