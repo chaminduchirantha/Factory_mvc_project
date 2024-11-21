@@ -15,6 +15,7 @@ public class AttendenceDto {
     private String entryTime;
     private String exitTime;
     private LocalDate attendenceDate;
+    private String shiftType;
     private String employeeId;
 
 }
