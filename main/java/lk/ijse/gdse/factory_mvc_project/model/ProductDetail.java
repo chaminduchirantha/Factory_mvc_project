@@ -11,7 +11,7 @@ public class ProductDetail {
 
     public boolean saveProductDetailsList(ArrayList<ProductDetailDto> productDetailDtos) throws SQLException, ClassNotFoundException {
         for (ProductDetailDto productDetailDto : productDetailDtos) {
-            boolean isProductDetailsSaved = saveOrderDetail(productDetailDto);
+            boolean isProductDetailsSaved = saveProductDetail(productDetailDto);
             if (!isProductDetailsSaved) {
                 return false;
             }
@@ -24,7 +24,7 @@ public class ProductDetail {
         return true;
     }
 
-    private boolean saveOrderDetail(ProductDetailDto productDetailDto) throws SQLException, ClassNotFoundException {
+    private boolean saveProductDetail(ProductDetailDto productDetailDto) throws SQLException, ClassNotFoundException {
         return CrudUtil.execute(
                 "insert into product_details values (?,?,?,?,?,?)",
                 productDetailDto.getItemId(),
