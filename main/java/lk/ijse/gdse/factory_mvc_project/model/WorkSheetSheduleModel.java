@@ -66,8 +66,8 @@ public class WorkSheetSheduleModel {
         statement.setString(5, workSheetSheduleDto.getWorkSheetId());
 
 
-        int isSaved = statement.executeUpdate();
-        return isSaved > 0;
+        int isUpdate = statement.executeUpdate();
+        return isUpdate > 0;
     }
     
     public boolean deleteWorkSheetShedule(String workSheetId) throws SQLException, ClassNotFoundException {
