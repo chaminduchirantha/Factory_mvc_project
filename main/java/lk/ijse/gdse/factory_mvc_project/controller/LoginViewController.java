@@ -4,39 +4,70 @@ package lk.ijse.gdse.factory_mvc_project.controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 
-import javax.swing.*;
 import java.io.IOException;
 
 public class LoginViewController {
 
     @FXML
-    private AnchorPane LoginAnchorPane;
+    AnchorPane LoginAnchorPane;
+
+    @FXML
+    private Pane userNamePasswordAnchorePane;
 
     @FXML
     private Button loginBut;
 
     @FXML
-    private TextField txName;
+    private TextField txtName;
 
     @FXML
     private TextField txtPassword;
 
+
     @FXML
     void loginOnAction(ActionEvent event) throws IOException {
-        String userName = txName.getText();
-        String password = txtPassword.getText();
+        try {
+            String username = txtName.getText();
+            String password = txtPassword.getText();
 
-        if (userName.equals("cha1234") || password.equals("cha1234")) {
-            LoginAnchorPane.getChildren().clear();
-            AnchorPane load = FXMLLoader.load(getClass().getResource("/View/HomePage.fxml"));
-            LoginAnchorPane.getChildren().add(load);
+            txtName.setStyle(txtName.getStyle() + ";-fx-border-color: #7367F0;");
+            txtPassword.setStyle(txtPassword.getStyle() + ";-fx-border-color: #7367F0;");
 
-    }else {
-            JOptionPane.showMessageDialog(null, "User name or PassWord is wrong ");
+            String namePattern = "^[A-Za-z ]+$";
+            String passwordPattern = "^[A-Za-z0-9]+$";
+
+            boolean isValidName = username.matches(namePattern);
+            boolean isValidPassword = password.matches(passwordPattern);
+
+            if (!isValidName) {
+                System.out.println(txtName.getStyle());
+                txtName.setStyle(txtName.getStyle() + ";-fx-border-color: red;");
+            }
+
+            if (!isValidPassword) {
+                System.out.println(txtPassword.getStyle());
+                txtPassword.setStyle(txtPassword.getStyle() + ";-fx-border-color: red;");
+            }
+
+            if (isValidName && isValidPassword) {
+
+                if (username.equals("user") && password.equals("1234")) {
+                    LoginAnchorPane.getChildren().clear();
+                    AnchorPane load = FXMLLoader.load(getClass().getResource("/view/HomePage.fxml"));
+                    LoginAnchorPane.getChildren().add(load);
+                } else {
+                    new Alert(Alert.AlertType.ERROR, "Invalid username or password ").show();
+                }
+            }
+        } catch (Exception e) {
+            new Alert(Alert.AlertType.ERROR, "LoginPage Not Found").show();
         }
     }
 }
