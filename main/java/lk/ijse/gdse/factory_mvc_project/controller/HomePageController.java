@@ -1,15 +1,21 @@
 package lk.ijse.gdse.factory_mvc_project.controller;
 
+import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.util.Duration;
 
 import javax.swing.*;
 import java.io.IOException;
+import java.util.Optional;
 
 public class HomePageController {
 
@@ -59,49 +65,66 @@ public class HomePageController {
     @FXML
     private AnchorPane homePageAnchorPane;
 
+    private AnchorPane LoginAnchorPane;
+
     @FXML
     private Label lblHomePage;
 
     @FXML
     private AnchorPane loadingAnchorPane;
 
-    @FXML
-    void LogOutOnAction(ActionEvent event) {
+    LoginViewController loginViewController = new LoginViewController();
 
+
+    @FXML
+    void logoutOnAction(ActionEvent event) throws IOException {
+        try {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to Log out this Programme?", ButtonType.YES, ButtonType.NO);
+            Optional<ButtonType> optionalButtonType = alert.showAndWait();
+
+            if (optionalButtonType.isPresent() && optionalButtonType.get() == ButtonType.YES) {
+                boolean isDeleted = true;
+                if (isDeleted) {
+                    homePageAnchorPane.getChildren().clear();
+                    AnchorPane load = FXMLLoader.load(getClass().getResource("/View/LoginView.fxml"));
+                    homePageAnchorPane.getChildren().add(load);
+                } else {
+                    new Alert(Alert.AlertType.ERROR, "Log out not Programme").show();
+                }
+            }
+        }catch (Exception e){
+            new Alert(Alert.AlertType.ERROR, "not found").show();
+
+        }
     }
 
     @FXML
-    void DilivaryOnAction(ActionEvent event) throws IOException {
-        navigateTo("/View/DilivaryView.fxml");
-    }
-
-    @FXML
-    void attendenceOnAction(ActionEvent event) throws IOException {
+    void attendenceOnAction(ActionEvent event){
         navigateTo("/View/AttendenceView.fxml");
     }
 
     @FXML
-    void branchOnAction(ActionEvent event) throws IOException {
+    void branchOnAction(ActionEvent event) {
         navigateTo("/View/BranchView.fxml");
     }
 
     @FXML
-    void employeeOnAction(ActionEvent event) throws IOException {
+    void employeeOnAction(ActionEvent event) {
         navigateTo("/View/EmployeeView.fxml");
     }
 
     @FXML
-    void machineOnAction(ActionEvent event) throws IOException {
+    void machineOnAction(ActionEvent event){
         navigateTo("/View/MachinesView.fxml");
     }
 
     @FXML
-    void paymentOnAction(ActionEvent event) throws IOException {
+    void paymentOnAction(ActionEvent event) {
         navigateTo("/View/PaymentView.fxml");
     }
 
     @FXML
-    void productOnAction(ActionEvent event) throws IOException {
+    void productOnAction(ActionEvent event) {
         navigateTo("/View/ProductView.fxml");
     }
 
@@ -111,28 +134,29 @@ public class HomePageController {
     }
 
     @FXML
-    void salaryOnAction(ActionEvent event) throws IOException {
+    void salaryOnAction(ActionEvent event){
         navigateTo("/View/SalaryView.fxml");
 
     }
 
     @FXML
-    void stockOnAction(ActionEvent event) throws IOException {
+    void stockOnAction(ActionEvent event)  {
         navigateTo("/View/StockView.fxml");
 
     }
 
     @FXML
-    void supplierOnAction(ActionEvent event) throws IOException {
+    void supplierOnAction(ActionEvent event){
         navigateTo("/View/SupplierView.fxml");
 
     }
 
     @FXML
-    void worksheetOnAction(ActionEvent event) throws IOException {
+    void worksheetOnAction(ActionEvent event)  {
         navigateTo("/View/Worksheet.fxml");
 
     }
+
 
     private void navigateTo(String fxmlPath) {
         try {
