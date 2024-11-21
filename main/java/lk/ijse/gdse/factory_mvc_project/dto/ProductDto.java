@@ -3,6 +3,7 @@ package lk.ijse.gdse.factory_mvc_project.dto;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 @Getter
 @Setter
@@ -14,5 +15,8 @@ public class ProductDto {
     private String productName;
     private double productPrice;
     private LocalDate productDate;
-    private String productRatings;
+    private String productRating;
+    private ArrayList<ProductDetailDto> productDetailDtos;
+
+
 }

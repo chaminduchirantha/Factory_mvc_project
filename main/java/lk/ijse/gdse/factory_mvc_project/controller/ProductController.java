@@ -1,5 +1,5 @@
 package lk.ijse.gdse.factory_mvc_project.controller;
-
+import javafx.animation.TranslateTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -9,10 +9,13 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import lk.ijse.gdse.factory_mvc_project.dto.EmployeeDto;
+import javafx.util.Duration;
+import lk.ijse.gdse.factory_mvc_project.dto.ProductDetailDto;
 import lk.ijse.gdse.factory_mvc_project.dto.ProductDto;
-import lk.ijse.gdse.factory_mvc_project.dto.tm.ProductTm;
+import lk.ijse.gdse.factory_mvc_project.dto.StockDto;
+import lk.ijse.gdse.factory_mvc_project.dto.tm.CartTm;
 import lk.ijse.gdse.factory_mvc_project.model.ProductModel;
+import lk.ijse.gdse.factory_mvc_project.model.StockModel;
 
 import java.net.URL;
 import java.sql.Date;
@@ -22,81 +25,88 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class ProductController implements Initializable {
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        idColomn.setCellValueFactory(new PropertyValueFactory<>("productId"));
-        nameColomn.setCellValueFactory(new PropertyValueFactory<>("productName"));
-        dateColomn.setCellValueFactory(new PropertyValueFactory<>("productDate"));
-        priceColmn.setCellValueFactory(new PropertyValueFactory<>("productPrice"));
-        ratingsColomn.setCellValueFactory(new PropertyValueFactory<>("productRatings"));
-
-        try {
-            loadNextProductId();
-            refreshPage();
-
-        }catch (Exception e){
-            e.printStackTrace();
-            new Alert(Alert.AlertType.ERROR, "Fail to load Product ID");
-        }
-    }
-
-    ProductModel productModel = new ProductModel();
-    private void loadNextProductId() throws SQLException, ClassNotFoundException {
-        String nextProductId = productModel.getNextProductId();
-        txtId.setText(nextProductId);
-    }
-
 
     @FXML
-    private Button buttClear;
+    private TableColumn<CartTm, Double> PriceColomn;
 
     @FXML
-    private Button buttDelete;
+    private Label ProductPrice;
 
     @FXML
-    private Button buttSave;
+    private Button btnAddCart;
 
     @FXML
-    private Button buttUpdate;
+    private Button btnClear;
 
     @FXML
-    private TableColumn<String , ProductTm> dateColomn;
+    private Button btnProduct;
+
+    @FXML
+    private ComboBox<String> cmbItemId;
+
+    @FXML
+    private ComboBox<String> cmbProductCatogry;
 
     @FXML
     private Label emLable;
 
     @FXML
-    private TableColumn<String, ProductTm> idColomn;
+    private TableColumn<CartTm, String> idColomn;
+
+    @FXML
+    private TableColumn<CartTm, String> itemNameColmn;
 
     @FXML
     private Label lblDate;
 
     @FXML
+    private Label lblDesc;
+
+    @FXML
     private Label lblId;
 
     @FXML
-    private Label lblName;
+    private Label lblId1;
+
+    @FXML
+    private Label lblId11;
+
+    @FXML
+    private Label lblId111;
+
+    @FXML
+    private Label lblId2;
+
+    @FXML
+    private Label lblItemCode;
+
+    @FXML
+    private Label lblQoh;
+
+    @FXML
+    private Label lblQoh1;
+
+
+    @FXML
+    private Label lblQuality;
 
     @FXML
     private Label lblPrice;
 
     @FXML
-    private Label lblRstings;
-
-    @FXML
-    private TableColumn<String, ProductTm> nameColomn;
-
-    @FXML
-    private TableColumn<String,ProductTm> priceColmn;
-
-    @FXML
     private AnchorPane productAnchorPane;
 
     @FXML
-    private TableColumn<String, ProductTm> ratingsColomn;
+    private Label productQuantity;
 
     @FXML
-    private TableView<ProductTm> tblProduct;
+    private TableColumn<CartTm, String> quantityColmn;
+
+    @FXML
+    private TableView<CartTm> tblProduct;
+
+    @FXML
+    private TableColumn<CartTm, String> totalColmn;
 
     @FXML
     private DatePicker txtDatePicker;
@@ -105,88 +115,236 @@ public class ProductController implements Initializable {
     private TextField txtId;
 
     @FXML
-    private TextField txtName;
+    private TextField txtQuantuty;
 
     @FXML
-    private TextField txtPrice;
+    private TextField txtProductName;
 
-    @FXML
-    private TextField txtRtings;
+    private final ProductModel productModel = new ProductModel();
+    private final StockModel stockModel = new StockModel();
+    private final ObservableList<CartTm> cartTMS = FXCollections.observableArrayList();
 
-    private void loadTableData() throws SQLException, ClassNotFoundException {
-        ArrayList<ProductDto> productDtos = productModel.getAllProduct();
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        idColomn.setCellValueFactory(new PropertyValueFactory<>("itemId"));
+        itemNameColmn.setCellValueFactory(new PropertyValueFactory<>("itemName"));
+        quantityColmn.setCellValueFactory(new PropertyValueFactory<>("itemQuantity"));
+        PriceColomn.setCellValueFactory(new PropertyValueFactory<>("itemPrice"));
+        totalColmn.setCellValueFactory(new PropertyValueFactory<>("totalPrice"));
 
-        ObservableList<ProductTm> productTms = FXCollections.observableArrayList();
+        TranslateTransition slider = new TranslateTransition();
+        slider.setNode(productAnchorPane);
+        slider.setDuration(Duration.seconds(1.0));
+        slider.setFromX(-200);
+        slider.setToX(0);
+        slider.play();
 
-        for (ProductDto productDto : productDtos) {
-            ProductTm productTm = new ProductTm(
-                    productDto.getProductId(),
-                    productDto.getProductName(),
-                    productDto.getProductPrice(),
-                    productDto.getProductDate(),
-                    productDto.getProductRatings()
+        tblProduct.setItems(cartTMS);
 
-            );
-            productTms.add(productTm);
+        try {
+            refreshPage();
+
+        }catch (Exception e){
+            e.printStackTrace();
         }
-        tblProduct.setItems(productTms);
+
+    }
+
+    private void refreshPage() throws SQLException, ClassNotFoundException {
+        txtId.setText(productModel.getNextProductId());
+
+        txtDatePicker.setTooltip(new Tooltip("Date"));
+
+        loadItemIds();
+        loadCmb();
+
+        cmbItemId.getSelectionModel().clearSelection();
+        lblDesc.setText("");
+        lblQoh1.setText("");
+        lblQuality.setText("");
+
+        cartTMS.clear();
+
+        tblProduct.refresh();
+    }
+
+    private void loadItemIds() {
+        StockModel stockModel = new StockModel();
+        try {
+            ArrayList<String> itemIDs = stockModel.getAllItemIDs();
+            ObservableList<String> observableList = FXCollections.observableArrayList();
+            observableList.addAll(itemIDs);
+            cmbItemId.setItems(observableList);
+        } catch (SQLException | ClassNotFoundException e) {
+            new Alert(Alert.AlertType.ERROR, "Stock not found").show();
+        }
+    }
+
+    private void loadCmb(){
+        String[]option = {"Mens" , "Women's"};
+        cmbProductCatogry.getItems().addAll(option);
+    }
+
+
+    @FXML
+    void btnAddToCartOnAction(ActionEvent event) {
+        String selectedItemId = cmbItemId.getValue();
+
+        if (selectedItemId == null) {
+            new Alert(Alert.AlertType.ERROR, "Please select item..!").show();
+            return;
+        }
+
+        String cartQtyString = txtQuantuty.getText();
+
+        String qtyPattern = "^[0-9]+$";
+
+
+        if (!cartQtyString.matches(qtyPattern)){
+            new Alert(Alert.AlertType.ERROR, "Please enter valid quantity..!").show();
+            return;
+        }
+
+        String itemName = lblDesc.getText();
+        int cartQty = Integer.parseInt(cartQtyString);
+        int qtyOnHand = Integer.parseInt(lblQoh1.getText());
+
+        if (qtyOnHand < cartQty) {
+            new Alert(Alert.AlertType.ERROR, "Not enough items..!").show();
+            return;
+        }
+
+
+        double unitPrice = Double.parseDouble(lblPrice.getText());
+        double total = unitPrice * cartQty;
+        double itemPrice = Double.parseDouble(lblPrice.getText());
+        int itemQuantity = Integer.parseInt(txtQuantuty.getText());
+
+        txtQuantuty.setText("");
+
+        for (CartTm cartTM : cartTMS) {
+
+            if (cartTM.getItemId().equals(selectedItemId)) {
+                int newQty = cartTM.getItemQuantity() + cartQty;
+                cartTM.setItemQuantity(newQty);
+                cartTM.setTotalPrice(unitPrice * newQty);
+
+                tblProduct.refresh();
+                return;
+            }
+        }
+
+
+
+        Button btn = new Button("Remove");
+
+        CartTm newCartTM = new CartTm(
+                selectedItemId,
+                itemPrice,
+                itemQuantity,
+                itemName,
+                total
+        );
+
+
+        btn.setOnAction(actionEvent -> {
+
+            cartTMS.remove(newCartTM);
+
+            tblProduct.refresh();
+        });
+
+        cartTMS.add(newCartTM);
     }
 
     @FXML
-    void clearONAction(ActionEvent event) throws SQLException, ClassNotFoundException {
+    void btnPlaceOrderOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
+
+            if (tblProduct.getItems().isEmpty()) {
+                new Alert(Alert.AlertType.ERROR, "Please add items to cart..!").show();
+                return;
+            }
+
+            String productId = txtId.getText();
+            LocalDate dateOfProduct = txtDatePicker.getValue();
+            String productName = txtProductName.getText();
+            String productCategory = cmbProductCatogry.getValue();
+            double productPrice = 0;
+            ArrayList<ProductDetailDto> productDetailDtos = new ArrayList<>();
+
+
+            for (CartTm cartTm : cartTMS) {
+
+                ProductDetailDto productDetailDto = new ProductDetailDto(
+                        cartTm.getItemId(),
+                        productId,
+                        dateOfProduct,
+                        cartTm.getItemPrice(),
+                        cartTm.getItemQuantity(),
+                        cartTm.getItemName(),
+                        cartTm.getTotalPrice()
+                );
+
+                productDetailDtos.add(productDetailDto);
+            }
+
+            for (ProductDetailDto productDetailDto : productDetailDtos) {
+                productPrice += productDetailDto.getTotalPrice();
+
+            }
+
+            System.out.println(productPrice);
+            System.out.println(productDetailDtos);
+
+            ProductDto productDto = new ProductDto(
+                    productId,
+                    productName,
+                    productPrice,
+                    dateOfProduct,
+                    productCategory,
+                    productDetailDtos
+
+            );
+
+            boolean isSaved = productModel.saveProduct(productDto);
+
+            if (isSaved) {
+                new Alert(Alert.AlertType.INFORMATION, "Product saved..!").show();
+                refreshPage();
+            } else {
+                new Alert(Alert.AlertType.ERROR, "Product Saved fail..!").show();
+            }
+        }
+
+
+
+    @FXML
+    void btnResetOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
         refreshPage();
 
     }
 
     @FXML
-    void deleteOnAction(ActionEvent event) {
+    void cmbStockOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
+        String selectedItemId = cmbItemId.getSelectionModel().getSelectedItem();
+        StockDto stockDto = stockModel.findById(selectedItemId);
 
-    }
+        if (stockDto != null) {
 
-    @FXML
-    void saveOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
-        String productId = txtId.getText();
-        String productName = txtName.getText();
-        double productPrice =Double.parseDouble(txtPrice.getText());
-        LocalDate productDate = txtDatePicker.getValue();
-        String productRating = txtRtings.getText();
-
-        ProductDto productDto = new ProductDto(productId, productName,productPrice, productDate, productRating);
-
-        boolean isSaved = productModel.saveProduct(productDto);
-        if (isSaved) {
-            refreshPage();
-            new Alert(Alert.AlertType.INFORMATION, "Successfully saved the Product").show();
-        } else {
-            new Alert(Alert.AlertType.INFORMATION, "Successfully saved the Product").show();
+            lblPrice.setText(String.valueOf(stockDto.getItemPrice()));
+            lblQoh1.setText(String.valueOf(stockDto.getQuantity()));
+            lblDesc.setText(String.valueOf(stockDto.getItemDescription()));
+            lblQuality.setText(stockDto.getItemQuality());
         }
     }
 
-    private void refreshPage() throws SQLException, ClassNotFoundException {
-
-//        loadNextProductId();
-        loadTableData();
-        buttSave.setDisable(false);
-
-        buttUpdate.setDisable(true);
-        buttDelete.setDisable(true);
-
-        txtId.setText("");
-        txtName.setText("");
-        txtDatePicker.setTooltip(new Tooltip("Date"));
-        txtPrice.setText("");
-        txtRtings.setText("");
-
-    }
 
     @FXML
     void tblProductOnMouseClicked(MouseEvent event) {
 
     }
 
-    @FXML
-    void updateOnAction(ActionEvent event) {
 
+    public void cmbSupplierOnAction(ActionEvent actionEvent) {
     }
-
-  }
+}
