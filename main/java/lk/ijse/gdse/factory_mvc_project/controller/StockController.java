@@ -1,5 +1,6 @@
 package lk.ijse.gdse.factory_mvc_project.controller;
 
+import javafx.animation.TranslateTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -9,54 +10,24 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.util.Duration;
+import lk.ijse.gdse.factory_mvc_project.db.DBConnection;
 import lk.ijse.gdse.factory_mvc_project.dto.EmployeeDto;
 import lk.ijse.gdse.factory_mvc_project.dto.StockDto;
 import lk.ijse.gdse.factory_mvc_project.dto.tm.EmployeeTm;
 import lk.ijse.gdse.factory_mvc_project.dto.tm.StockTm;
 import lk.ijse.gdse.factory_mvc_project.model.StockModel;
+import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.view.JasperViewer;
 
 import java.net.URL;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class StockController implements Initializable {
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        colomnId.setCellValueFactory(new PropertyValueFactory<>("itemCode"));
-        colomnDesc.setCellValueFactory(new PropertyValueFactory<>("itemPrice"));
-        colomnPrice.setCellValueFactory(new PropertyValueFactory<>("quantity"));
-        colomnQoh.setCellValueFactory(new PropertyValueFactory<>("itemDescription"));
-        colomnQuality.setCellValueFactory(new PropertyValueFactory<>("itemQuality"));
-
-        try {
-            loadNextItemId();
-            loadTableData();
-        } catch (Exception e) {
-            e.printStackTrace();
-            new Alert(Alert.AlertType.ERROR, "Fail to load Item ID");
-        }
-    }
-
-    private void refreshPage() throws SQLException, ClassNotFoundException {
-
-        loadNextItemId();
-       loadTableData();
-
-        buttSave.setDisable(false);
-
-        buttUpdate.setDisable(true);
-        buttDelete.setDisable(true);
-
-        txtPrice.setText("");
-        txtDesc.setText("");
-        txtQoh.setText("");
-        txtQu.setText("");
-
-    }
-
 
     @FXML
     private Button buttClear;
@@ -90,6 +61,9 @@ public class StockController implements Initializable {
 
     @FXML
     private AnchorPane stockAnchorPane;
+
+    @FXML
+    private ComboBox<String> cmbOption;
 
     @FXML
     private TableView<StockTm> tblStock;
@@ -126,28 +100,88 @@ public class StockController implements Initializable {
 
     StockModel stockModel = new StockModel();
 
-    private void loadTableData() throws SQLException, ClassNotFoundException {
-        ArrayList<StockDto> stockDtos = stockModel.getAllItems();
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        colomnId.setCellValueFactory(new PropertyValueFactory<>("itemCode"));
+        colomnDesc.setCellValueFactory(new PropertyValueFactory<>("itemDescription"));
+        colomnPrice.setCellValueFactory(new PropertyValueFactory<>("itemPrice"));
+        colomnQoh.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+        colomnQuality.setCellValueFactory(new PropertyValueFactory<>("itemQuality"));
 
-        ObservableList<StockTm> stockTms = FXCollections.observableArrayList();
+        TranslateTransition slider = new TranslateTransition();
+        slider.setNode(stockAnchorPane);
+        slider.setDuration(Duration.seconds(1.0));
+        slider.setFromX(-200);
+        slider.setToX(0);
+        slider.play();
 
-        for (StockDto stockDto : stockDtos) {
-            StockTm stockTm = new StockTm(
-                    stockDto.getItemCode(),
-                    stockDto.getItemPrice(),
-                    stockDto.getQuantity(),
-                    stockDto.getItemDescription(),
-                    stockDto.getItemQuality()
-            );
-            stockTms.add(stockTm);
+
+        try {
+            loadNextItemId();
+            loadTableData();
+            loadCmb();
+        } catch (Exception e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Fail to load Item ID");
         }
-        tblStock.setItems(stockTms);
+    }
+
+    private void loadCmb(){
+        String[]option = {"GOOD" , "BAD"};
+        cmbOption.getItems().addAll(option);
+    }
+
+    private void refreshPage() {
+        try {
+            loadNextItemId();
+            loadTableData();
+
+            buttSave.setDisable(false);
+
+            buttUpdate.setDisable(true);
+            buttDelete.setDisable(true);
+
+            txtPrice.setText("");
+            txtDesc.setText("");
+            txtQoh.setText("");
+            cmbOption.setValue("");
+//            txtQu.setText("");
+
+        } catch (SQLException |ClassNotFoundException e) {
+            new Alert(Alert.AlertType.ERROR, "Stock Not Found").show();
+        }
+    }
+
+    private void loadTableData() {
+        try {
+            ArrayList<StockDto> stockDtos = stockModel.getAllItems();
+
+            ObservableList<StockTm> stockTms = FXCollections.observableArrayList();
+
+            for (StockDto stockDto : stockDtos) {
+                StockTm stockTm = new StockTm(
+                        stockDto.getItemCode(),
+                        stockDto.getItemPrice(),
+                        stockDto.getQuantity(),
+                        stockDto.getItemDescription(),
+                        stockDto.getItemQuality()
+                );
+                stockTms.add(stockTm);
+            }
+            tblStock.setItems(stockTms);
+
+        } catch (SQLException | ClassNotFoundException e) {
+            new Alert(Alert.AlertType.ERROR, "Stock Not Found").show();
+        }
     }
 
     public void loadNextItemId() throws SQLException, ClassNotFoundException {
-
-        String nextEmployeeId = stockModel.getNextItemCode();;
-        txtCode.setText(nextEmployeeId);
+        try {
+            String nextItemId = stockModel.getNextItemCode();;
+            txtCode.setText(nextItemId);
+        } catch (Exception e) {
+            new Alert(Alert.AlertType.ERROR, "Stock Not Found").show();
+        }
     }
 
     @FXML
@@ -157,38 +191,89 @@ public class StockController implements Initializable {
     }
 
     @FXML
-    void deleteOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
-        String itemCode = txtCode.getText();
+    void deleteOnAction(ActionEvent event) {
+        try {
+            String itemCode = txtCode.getText();
 
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION , "Are you sure you want to delete this item?" , ButtonType.YES , ButtonType.NO);
-        Optional<ButtonType> optionalButtonType = alert.showAndWait();
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION , "Are you sure you want to delete this item?" , ButtonType.YES , ButtonType.NO);
+            Optional<ButtonType> optionalButtonType = alert.showAndWait();
 
-        if (optionalButtonType.isPresent() && optionalButtonType.get() == ButtonType.YES) {
-            boolean isDeleted = stockModel.deleteItem(itemCode);
-            if (isDeleted) {
-                refreshPage();
-                new Alert(Alert.AlertType.INFORMATION , "item deleted").show();
+            if (optionalButtonType.isPresent() && optionalButtonType.get() == ButtonType.YES) {
+                boolean isDeleted = stockModel.deleteItem(itemCode);
+                if (isDeleted) {
+                    refreshPage();
+                    new Alert(Alert.AlertType.INFORMATION , "item deleted").show();
 
-            }else{
-                new Alert(Alert.AlertType.ERROR , "item not deleted").show();
+                }else{
+                    new Alert(Alert.AlertType.ERROR , "item not deleted").show();
+                }
             }
+        } catch (SQLException | ClassNotFoundException e) {
+            new Alert(Alert.AlertType.ERROR, "Stock Not Found").show();
         }
     }
 
     @FXML
     void reportOnAction(ActionEvent event) {
+        try {
+            JasperReport jasperReport = JasperCompileManager.compileReport(
+                    getClass()
+                            .getResourceAsStream("/reports/ItemRecordReport.jrxml"
+                            ));
 
+            Connection connection = DBConnection.getInstance().getConnection();
+
+            JasperPrint jasperPrint = JasperFillManager.fillReport(
+                    jasperReport,
+                    null,
+                    connection
+            );
+
+            JasperViewer.viewReport(jasperPrint, false);
+            System.out.println("employee");
+        } catch (JRException e) {
+            new Alert(Alert.AlertType.ERROR, "Fail to generate report...!").show();
+//           e.printStackTrace();
+        } catch (SQLException | ClassNotFoundException e) {
+            new Alert(Alert.AlertType.ERROR, "DB error...!").show();
+        }
     }
 
     @FXML
-    void tblOnMouseClick(MouseEvent event) throws SQLException, ClassNotFoundException {
+    void productReportOnAction(ActionEvent event) {
+        try {
+            JasperReport jasperReport = JasperCompileManager.compileReport(
+                    getClass()
+                            .getResourceAsStream("/reports/itemProductReport.jrxml"
+                            ));
+
+            Connection connection = DBConnection.getInstance().getConnection();
+
+            JasperPrint jasperPrint = JasperFillManager.fillReport(
+                    jasperReport,
+                    null,
+                    connection
+            );
+
+            JasperViewer.viewReport(jasperPrint, false);
+            System.out.println("employee");
+        } catch (JRException e) {
+            new Alert(Alert.AlertType.ERROR, "Fail to generate report...!").show();
+        } catch (SQLException | ClassNotFoundException e) {
+            new Alert(Alert.AlertType.ERROR, "DB error...!").show();
+        }
+    }
+
+
+    @FXML
+    void tblOnMouseClick(MouseEvent event) {
         StockTm stockTm = tblStock.getSelectionModel().getSelectedItem();
         if (stockTm != null) {
             txtCode.setText(stockTm.getItemCode());
             txtPrice.setText(String.valueOf(stockTm.getItemPrice()));
             txtQoh.setText(String.valueOf(stockTm.getQuantity()));
             txtDesc.setText(stockTm.getItemDescription());
-            txtQu.setText(stockTm.getItemQuality());
+            cmbOption.setValue(stockTm.getItemQuality());
 
 
             buttSave.setDisable(true);
@@ -202,41 +287,59 @@ public class StockController implements Initializable {
 
     @FXML
     void saveOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
-        String itemCode = txtCode.getText();
-        double itemPrice =Double.parseDouble(txtPrice.getText());
-        int qoh = Integer.parseInt(txtQoh.getText());
-        String itemDescription = txtDesc.getText();
-        String itemQuality = txtQu.getText();
+        try {
+            String itemCode = txtCode.getText();
+            double itemPrice =Double.parseDouble(txtPrice.getText());
+            int qoh = Integer.parseInt(txtQoh.getText());
+            String itemDescription = txtDesc.getText();
+            String itemQuality = cmbOption.getValue().toString();
 
-        StockDto stockDto = new StockDto(itemCode, itemPrice,qoh, itemDescription, itemQuality);
+            StockDto stockDto = new StockDto(itemCode, itemPrice,qoh, itemDescription, itemQuality);
 
-        boolean isSaved = stockModel.saveItem(stockDto);
-        if (isSaved) {
-            refreshPage();
-            new Alert(Alert.AlertType.INFORMATION, "Successfully saved the Employee").show();
+            boolean isSaved = stockModel.saveItem(stockDto);
+            if (isSaved) {
+                refreshPage();
+                new Alert(Alert.AlertType.INFORMATION, "Successfully saved the Item").show();
 //            loadTableData();
-        } else {
-            new Alert(Alert.AlertType.ERROR, "Fail to save the Employee").show();
+            } else {
+                new Alert(Alert.AlertType.ERROR, "Fail to save the Item").show();
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            new Alert(Alert.AlertType.ERROR, "Stock Not Found").show();
         }
     }
 
     @FXML
     void updateOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
-        String itemCode = txtCode.getText();
-        double itemPrice =Double.parseDouble(txtPrice.getText());
-        int qoh = Integer.parseInt(txtQoh.getText());
-        String itemDescription = txtDesc.getText();
-        String itemQuality = txtQu.getText();
+        try {
+            String itemCode = txtCode.getText();
+            double itemPrice = Double.parseDouble(txtPrice.getText());
+            int qoh = Integer.parseInt(txtQoh.getText());
+            String itemDescription = txtDesc.getText();
+            String itemQuality = cmbOption.getValue().toString();
 
-        StockDto stockDto = new StockDto(itemCode, itemPrice,qoh, itemDescription, itemQuality);
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION , "Are you sure you want to Update this item?" , ButtonType.YES , ButtonType.NO);
+            Optional<ButtonType> optionalButtonType = alert.showAndWait();
 
-        boolean isSaved = stockModel.updateItem(stockDto);
-        if (isSaved) {
-            refreshPage();
-            new Alert(Alert.AlertType.INFORMATION, "Successfully update the Item").show();
-//            loadTableData();
-        } else {
-            new Alert(Alert.AlertType.ERROR, "Fail to update the item").show();
+            if (optionalButtonType.isPresent() && optionalButtonType.get() == ButtonType.YES) {
+                StockDto stockDto = new StockDto(itemCode,
+                        itemPrice,
+                        qoh,
+                        itemDescription,
+                        itemQuality
+                );
+
+                boolean isSaved = stockModel.updateItem(stockDto);
+                if (isSaved) {
+                    refreshPage();
+                    new Alert(Alert.AlertType.INFORMATION, "Successfully update the Item").show();
+                } else {
+                    new Alert(Alert.AlertType.ERROR, "Fail to update the item").show();
+                }
+            }
+
+        } catch (SQLException | ClassNotFoundException e) {
+            new Alert(Alert.AlertType.ERROR, "Stock Not Found").show();
         }
     }
 }

@@ -2,6 +2,7 @@ package lk.ijse.gdse.factory_mvc_project.model;
 
 import lk.ijse.gdse.factory_mvc_project.db.DBConnection;
 import lk.ijse.gdse.factory_mvc_project.dto.EmployeeDto;
+import lk.ijse.gdse.factory_mvc_project.dto.ProductDetailDto;
 import lk.ijse.gdse.factory_mvc_project.dto.StockDto;
 import lk.ijse.gdse.factory_mvc_project.util.CrudUtil;
 
@@ -67,11 +68,39 @@ public class StockModel {
         statement.setString(5, stockDto.getItemCode());
 
 
-        int isSaved = statement.executeUpdate();
-        return isSaved > 0;
+        int isUpdate = statement.executeUpdate();
+        return isUpdate > 0;
     }
 
     public boolean deleteItem(String itemCode) throws SQLException, ClassNotFoundException {
         return CrudUtil.execute("delete from item_management where item_id=?", itemCode);
     }
+
+    public ArrayList<String> getAllItemIDs() throws SQLException, ClassNotFoundException {
+        ResultSet rst = CrudUtil.execute("select item_id from item_management");
+        ArrayList<String> itemIds = new ArrayList<>();
+        while (rst.next()) {
+            itemIds.add(rst.getString(1));
+        }
+        return itemIds;
+    }
+
+    public StockDto findById(String selectItemId) throws SQLException, ClassNotFoundException {
+        ResultSet rst = CrudUtil.execute("select * from item_management where item_id=?", selectItemId);
+
+        if (rst.next()) {
+            return new StockDto(rst.getString(1), rst.getDouble(2), rst.getInt(3), rst.getString(4), rst.getString(5));
+
+        }
+        return null;
+    }
+    public boolean reduceQty(ProductDetailDto productDetailDto) throws SQLException, ClassNotFoundException {
+        // Execute SQL query to update the item quantity in the database
+        return CrudUtil.execute(
+                "update item_management set item_quantity_on_hand = item_quantity_on_hand - ? where item_id = ?",
+                productDetailDto.getItemQuantity(),   // Quantity to reduce
+                productDetailDto.getItemId()      // Item ID
+        );
+    }
+
 }
