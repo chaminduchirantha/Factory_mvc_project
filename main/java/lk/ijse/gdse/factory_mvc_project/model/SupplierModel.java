@@ -39,6 +39,7 @@ public class SupplierModel {
     }
 
     public ArrayList<SupplierDto> getAllSupplier() throws SQLException, ClassNotFoundException {
+
         ResultSet rst =  CrudUtil.execute("select * from supplier_management");
         ArrayList<SupplierDto> supplierDtos = new ArrayList<>();
 
@@ -48,8 +49,8 @@ public class SupplierModel {
             supplierDto.setSupplierName(rst.getString("supplier_name"));
             supplierDto.setSupplierAddress(rst.getString("supplier_address"));
             supplierDto.setSupplierAge(rst.getInt("supplier_age"));
-            supplierDto.setSupplierNICNumber(rst.getString("supplier_contact_number"));
-            supplierDto.setSupplierContactNumber(rst.getString("supplier_Nic_no"));
+            supplierDto.setSupplierContactNumber(rst.getString("supplier_contact_number"));
+            supplierDto.setSupplierNICNumber(rst.getString("supplier_Nic_no"));
 
             supplierDtos.add(supplierDto);
         }
@@ -68,11 +69,30 @@ public class SupplierModel {
         statement.setString(6, supplierDto.getSupplierId());
 
 
-        int isSaved = statement.executeUpdate();
-        return isSaved > 0;
+        int isUpdate = statement.executeUpdate();
+        return isUpdate > 0;
     }
 
     public boolean deleteSupplier(String supplierId) throws SQLException, ClassNotFoundException {
         return CrudUtil.execute("delete from supplier_management where supplier_id=?", supplierId);
+    }
+
+    public ArrayList<String> getAllSupplierIDs() throws SQLException, ClassNotFoundException {
+        ResultSet rst = CrudUtil.execute("select supplier_id from supplier_management");
+        ArrayList<String> supplierIds = new ArrayList<>();
+        while (rst.next()) {
+            supplierIds.add(rst.getString(1));
+        }
+        return supplierIds;
+    }
+
+    public SupplierDto findById(String selectedSupId) throws SQLException, ClassNotFoundException {
+        ResultSet rst = CrudUtil.execute("select * from supplier_management where supplier_id=?", selectedSupId);
+
+        if (rst.next()) {
+            return new SupplierDto(rst.getString(1), rst.getString(2), rst.getString(3), rst.getInt(4), rst.getString(5), rst.getString(6));
+
+        }
+        return null;
     }
 }
