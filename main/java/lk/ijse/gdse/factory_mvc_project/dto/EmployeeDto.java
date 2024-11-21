@@ -14,6 +14,6 @@ public class EmployeeDto {
     private int employeeAge;
     private String employeeAddress;
     private String employeeSection;
-    private String employeeTask;
+    private String employeeNic;
     private String employeeContactNumber;
 }

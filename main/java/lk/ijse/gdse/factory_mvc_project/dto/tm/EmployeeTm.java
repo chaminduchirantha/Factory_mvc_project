@@ -11,9 +11,9 @@ import lombok.*;
 public class EmployeeTm {
     private String employeeId;
     private String employeeName;
-    private String employeeAge;
+    private int employeeAge;
     private String employeeAddress;
     private String employeeSection;
-    private String employeeTask;
+    private String employeeNic;
     private String employeeContactNumber;
 }

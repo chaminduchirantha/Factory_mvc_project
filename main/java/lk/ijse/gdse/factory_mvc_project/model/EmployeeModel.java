@@ -33,7 +33,7 @@ public class EmployeeModel {
         statement.setInt(3,employeeDto.getEmployeeAge());
         statement.setString(4, employeeDto.getEmployeeAddress());
         statement.setString(5,employeeDto.getEmployeeSection());
-        statement.setString(6,employeeDto.getEmployeeTask());
+        statement.setString(6,employeeDto.getEmployeeNic());
         statement.setString(7, employeeDto.getEmployeeContactNumber());
 
         int isSaved = statement.executeUpdate();
@@ -51,7 +51,7 @@ public class EmployeeModel {
             employeeDto.setEmployeeAge(rst.getInt("employee_age"));
             employeeDto.setEmployeeAddress(rst.getString("employee_address"));
             employeeDto.setEmployeeSection(rst.getString("employee_section"));
-            employeeDto.setEmployeeTask(rst.getString("employee_task"));
+            employeeDto.setEmployeeNic(rst.getString("employee_nic_number"));
             employeeDto.setEmployeeContactNumber(rst.getString("employee_contact_number"));
 
             employeeDtos.add(employeeDto);
@@ -61,14 +61,14 @@ public class EmployeeModel {
 
     public boolean updateEmployee(EmployeeDto employeeDto) throws SQLException, ClassNotFoundException {
         Connection connection = DBConnection.getInstance().getConnection();
-        String sql = "update employee set employee_name=?, employee_age=?, employee_address=?, employee_section=?, employee_task=?, employee_contact_number=? where employee_id=?";
+        String sql = "update employee set employee_name=?, employee_age=?, employee_address=?, employee_section=?, employee_nic_number=?, employee_contact_number=? where employee_id=?";
         PreparedStatement statement = connection.prepareStatement(sql);
 
         statement.setString(1, employeeDto.getEmployeeName());
         statement.setInt(2, employeeDto.getEmployeeAge());
         statement.setString(3, employeeDto.getEmployeeAddress());
         statement.setString(4, employeeDto.getEmployeeSection());
-        statement.setString(5, employeeDto.getEmployeeTask());
+        statement.setString(5, employeeDto.getEmployeeNic());
         statement.setString(6, employeeDto.getEmployeeContactNumber());
         statement.setString(7, employeeDto.getEmployeeId());
 
@@ -78,5 +78,24 @@ public class EmployeeModel {
 
     public boolean deleteEmployee(String employeeId) throws SQLException, ClassNotFoundException {
         return CrudUtil.execute("delete from employee where employee_id=?", employeeId);
+    }
+
+    public ArrayList<String> getAllEmployeeContactNumbers() throws SQLException, ClassNotFoundException {
+        ResultSet rst = CrudUtil.execute("select employee_contact_number from employee");
+        ArrayList<String> employeeIds = new ArrayList<>();
+        while (rst.next()) {
+            employeeIds.add(rst.getString(1));
+        }
+        return employeeIds;
+    }
+
+    public EmployeeDto findByContactNumber(String selectedEmId) throws SQLException, ClassNotFoundException {
+        ResultSet rst = CrudUtil.execute("select * from employee where employee_contact_number=?", selectedEmId);
+
+        if (rst.next()) {
+            return new EmployeeDto(rst.getString(1), rst.getString(2), rst.getInt(3), rst.getString(4), rst.getString(5), rst.getString(6), rst.getString(7));
+
+        }
+        return null;
     }
 }
