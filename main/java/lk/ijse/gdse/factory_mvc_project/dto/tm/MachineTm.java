@@ -1,4 +1,4 @@
-package lk.ijse.gdse.factory_mvc_project.dto;
+package lk.ijse.gdse.factory_mvc_project.dto.tm;
 
 import lombok.*;
 
@@ -7,7 +7,7 @@ import lombok.*;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class MachineDto {
+public class MachineTm {
     private String machineId;
     private String machineName;
     private String machineTask;
