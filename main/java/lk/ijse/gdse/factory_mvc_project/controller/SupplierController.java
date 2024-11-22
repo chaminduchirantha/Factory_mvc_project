@@ -344,8 +344,8 @@ public class SupplierController implements Initializable {
 
                 if (optionalButtonType.isPresent() && optionalButtonType.get() == ButtonType.YES) {
 
-                    boolean isSaved = supplierModel.updateSupplier(supplierDto);
-                    if (isSaved) {
+                    boolean isUpdate = supplierModel.updateSupplier(supplierDto);
+                    if (isUpdate) {
                         refreshPage();
                         new Alert(Alert.AlertType.INFORMATION, "Successfully update the Supplier").show();
                     } else {

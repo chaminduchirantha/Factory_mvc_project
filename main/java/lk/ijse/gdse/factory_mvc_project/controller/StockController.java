@@ -329,8 +329,8 @@ public class StockController implements Initializable {
                         itemQuality
                 );
 
-                boolean isSaved = stockModel.updateItem(stockDto);
-                if (isSaved) {
+                boolean isUpdate = stockModel.updateItem(stockDto);
+                if (isUpdate) {
                     refreshPage();
                     new Alert(Alert.AlertType.INFORMATION, "Successfully update the Item").show();
                 } else {
