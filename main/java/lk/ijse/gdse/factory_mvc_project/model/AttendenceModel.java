@@ -23,13 +23,14 @@ public class AttendenceModel {
 
     public boolean saveAttendence(AttendenceDto attendenceDto) throws SQLException, ClassNotFoundException {
         Connection connection = DBConnection.getInstance().getConnection();
-        String sql = "insert into attendence values(?,?,?,?,?)";
+        String sql = "insert into attendence values(?,?,?,?,?,?)";
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setString(1, attendenceDto.getAttendenceId());
         statement.setString(2, attendenceDto.getEntryTime());
         statement.setString(3,attendenceDto.getExitTime());
         statement.setDate(4, Date.valueOf(attendenceDto.getAttendenceDate()));
-        statement.setString(5,attendenceDto.getEmployeeId());
+        statement.setString(5, attendenceDto.getShiftType());
+        statement.setString(6,attendenceDto.getEmployeeId());
 
 
         int isSaved = statement.executeUpdate();
@@ -46,6 +47,7 @@ public class AttendenceModel {
             attendenceDto.setEntryTime(rst.getString("entry_time"));
             attendenceDto.setExitTime(rst.getString("exite_time"));
             attendenceDto.setAttendenceDate(rst.getDate("attendence_date").toLocalDate());
+            attendenceDto.setShiftType(rst.getString("shift_type"));
             attendenceDto.setEmployeeId(rst.getString("employee_id"));
 
             attendenceDtos.add(attendenceDto);
@@ -55,14 +57,15 @@ public class AttendenceModel {
 
     public boolean updateAttendence(AttendenceDto attendenceDto) throws SQLException, ClassNotFoundException {
         Connection connection = DBConnection.getInstance().getConnection();
-        String sql = "update attendence set entry_time=?, exite_time=?, attendence_date=?, employee_id=? where attendence_id=?";
+        String sql = "update attendence set entry_time=?, exite_time=?, attendence_date=?, shift_type=?, employee_id=? where attendence_id=?";
         PreparedStatement statement = connection.prepareStatement(sql);
 
         statement.setString(1, attendenceDto.getEntryTime());
         statement.setString(2,attendenceDto.getExitTime());
         statement.setDate(3, Date.valueOf(attendenceDto.getAttendenceDate()));
-        statement.setString(4,attendenceDto.getEmployeeId());
-        statement.setString(5, attendenceDto.getAttendenceId());
+        statement.setString(4,attendenceDto.getShiftType());
+        statement.setString(5,attendenceDto.getEmployeeId());
+        statement.setString(6, attendenceDto.getAttendenceId());
 
         int isUpdate = statement.executeUpdate();
         return isUpdate > 0;

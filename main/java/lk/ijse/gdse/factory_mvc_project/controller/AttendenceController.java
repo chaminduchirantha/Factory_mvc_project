@@ -308,8 +308,10 @@ public class AttendenceController implements Initializable {
                     new Alert(Alert.AlertType.ERROR, "Fail to update the Attendance").show();
                 }
             }
+
         }catch (SQLException | ClassNotFoundException e) {
             new Alert(Alert.AlertType.ERROR, "Attendence Not Found").show();
+            System.out.println(e.getMessage());
         }
     }
 
