@@ -31,6 +31,12 @@ public class LoginViewController {
     @FXML
     private TextField txtPassword;
 
+    public static String loggedInUser;
+    public static String loggedInUser1;
+
+
+
+
 
     @FXML
     void loginOnAction(ActionEvent event) throws IOException {
@@ -54,19 +60,24 @@ public class LoginViewController {
 
             if (!isValidPassword) {
                 System.out.println(txtPassword.getStyle());
-                txtPassword.setStyle(txtPassword.getStyle() + ";-fx-border-color: red;");
+                txtPassword.setStyle(txtPassword.getStyle() + ";-fx-border-color: #ff0000;");
             }
 
             if (isValidName && isValidPassword) {
 
-                if (username.equals("user") && password.equals("1234")) {
-                    LoginAnchorPane.getChildren().clear();
+                if ((username.equals("fm") && password.equals("1234")) || ((username.equals("gm") && password.equals("1234")) || ((username.equals("sm") && password.equals("1234"))))){
+                    loggedInUser = username;
                     AnchorPane load = FXMLLoader.load(getClass().getResource("/view/HomePage.fxml"));
+                    LoginAnchorPane.getChildren().clear();
                     LoginAnchorPane.getChildren().add(load);
-                } else {
-                    new Alert(Alert.AlertType.ERROR, "Invalid username or password ").show();
+
+                }else{
+                    txtName.clear();
+                    txtPassword.clear();
+                    new Alert(Alert.AlertType.ERROR, "Wrong Username or Password").show();
                 }
             }
+
         } catch (Exception e) {
             new Alert(Alert.AlertType.ERROR, "LoginPage Not Found").show();
         }
