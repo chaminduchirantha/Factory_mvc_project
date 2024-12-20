@@ -11,6 +11,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
+import lk.ijse.gdse.factory_mvc_project.DAO.EmployeeDaoImpl;
 import lk.ijse.gdse.factory_mvc_project.db.DBConnection;
 import lk.ijse.gdse.factory_mvc_project.dto.EmployeeDto;
 import lk.ijse.gdse.factory_mvc_project.dto.tm.EmployeeTm;
