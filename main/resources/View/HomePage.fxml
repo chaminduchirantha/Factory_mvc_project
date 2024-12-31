@@ -2,22 +2,21 @@
 
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.effect.Blend?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="homePageAnchorPane" prefHeight="721.0" prefWidth="1075.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse.factory_mvc_project.controller.HomePageController">
+<AnchorPane fx:id="homePageAnchorPane" prefHeight="721.0" prefWidth="1075.0" style="-fx-background-color: CAF0F8;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse.factory_mvc_project.controller.HomePageController">
    <children>
-      <Pane fx:id="OptionPane" layoutX="-5.0" layoutY="63.0" prefHeight="658.0" prefWidth="203.0" style="-fx-background-color: #5C6BC0; -fx-border-color: #dff9fb;">
+      <Pane fx:id="OptionPane" layoutX="-5.0" layoutY="63.0" prefHeight="658.0" prefWidth="203.0" style="-fx-background-color: CAF0F8;">
          <children>
-            <Pane layoutX="12.0" layoutY="38.0" prefHeight="591.0" prefWidth="184.0" style="-fx-background-color: CAF0F8; -fx-background-radius: 10; -fx-border-color: #1e272e; -fx-border-radius: 10;">
+            <Pane layoutX="12.0" layoutY="52.0" prefHeight="577.0" prefWidth="184.0" style="-fx-background-color: CAF0F8; -fx-background-radius: 10; -fx-border-color: #1e272e; -fx-border-radius: 10;">
                <children>
                   <Button fx:id="ButtPayment" contentDisplay="CENTER" layoutX="62.0" layoutY="404.0" lineSpacing="10.0" mnemonicParsing="false" onAction="#paymentOnAction" prefHeight="30.0" prefWidth="114.0" style="-fx-background-color: CAF0F8; -fx-background-radius: 5; -fx-border-color: #1e272e; -fx-border-radius: 5; -fx-border-width: 0 0 1px 0;" text="Payment" textAlignment="JUSTIFY" textOverrun="CLIP">
                      <font>
@@ -180,16 +179,12 @@
                      </cursor>
                   </Button>
                </children></Pane>
+            <Line endX="1000.199951171875" endY="-5.999992370605469" layoutX="104.0" layoutY="7.0" startX="-104.00001525878906" startY="-6.999992370605469" strokeWidth="2.0" />
          </children>
       </Pane>
-      <Label fx:id="lblHomePage" layoutY="-3.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="70.0" prefWidth="1099.0" style="-fx-background-color: #5C6BC0;" text="                                                                 Garment Factory Management System" textFill="#fffcfc">
-         <font>
-            <Font name="System Bold" size="24.0" />
-         </font>
-      </Label>
       <AnchorPane fx:id="loadingAnchorPane" layoutX="199.2" layoutY="70.4" prefHeight="649.0" prefWidth="900.0" style="-fx-background-color: #fff;" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="199.0" AnchorPane.topAnchor="70.0">
          <children>
-            <Pane layoutX="14.0" layoutY="510.0" prefHeight="122.0" prefWidth="872.0" style="-fx-background-radius: 10; -fx-border-radius: 10;">
+            <Pane layoutX="14.0" layoutY="525.0" prefHeight="122.0" prefWidth="872.0" style="-fx-background-radius: 10; -fx-border-radius: 10;">
                <children>
                   <Text layoutX="9.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Inventory Management: Keeps track of raw materials, work-in-progress items, and finished goods, helping maintain optimal stock levels and preventing overstock or stockouts.&#10;Employee Management: Tracks employee attendance, performance, and productivity, helping managers make informed decisions about workforce allocation and training needs." wrappingWidth="839.7299041748047">
                      <font>
@@ -200,34 +195,33 @@
             </Pane>
             <Pane layoutX="595.0" layoutY="35.0" prefHeight="451.0" prefWidth="298.0" style="-fx-background-radius: 10; -fx-border-radius: 10;">
                <children>
-                  <Text layoutX="54.0" layoutY="-2.0" strokeType="OUTSIDE" strokeWidth="0.0" text="The garment factory main task is to manufacture high-quality apparel for the domestic and international markets. Considered aspects linked with innovation, the factory has advanced machinery and skillful operators. It supplies garments to leading fashion brands and retailers and the production.&#10;&#10;" wrappingWidth="239.58320426940918">
+                  <Text layoutX="54.0" layoutY="21.0" strokeType="OUTSIDE" strokeWidth="0.0" text="The garment factory main task is to manufacture high-quality apparel for the domestic and international markets. Considered aspects linked with innovation, the factory has advanced machinery and skillful operators. It supplies garments to leading fashion brands and retailers and the production.&#10;&#10;" wrappingWidth="239.58320426940918">
                      <font>
                         <Font name="Garamond" size="18.0" />
                      </font>
                   </Text>
-                  <Text layoutX="50.0" layoutY="211.0" strokeType="OUTSIDE" strokeWidth="0.0" text="The proposed system aims to digitize the entire workflow of a garment factory, from the receipt of raw materials to the dispatch of finished products. It will provide real-time tracking of resources, automate inventory management, and simplify employee scheduling and payroll management. The system will also enable seamless coordination between departments such as production, quality control, shipping, and finance.&#10;&#10;" wrappingWidth="239.58320426940918">
+                  <Text layoutX="50.0" layoutY="234.0" strokeType="OUTSIDE" strokeWidth="0.0" text="The proposed system aims to digitize the entire workflow of a garment factory, from the receipt of raw materials to the dispatch of finished products. It will provide real-time tracking of resources, automate inventory management, and simplify employee scheduling and payroll management. The system will also enable seamless coordination between departments such as production, quality control, shipping, and finance.&#10;&#10;" wrappingWidth="239.58320426940918">
                      <font>
                         <Font name="Garamond" size="18.0" />
                      </font>
                   </Text>
                </children>
             </Pane>
-            <ImageView fitHeight="508.0" fitWidth="630.0" layoutX="7.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="508.0" fitWidth="630.0" layoutX="7.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../Image/6815.jpg" />
                </image>
             </ImageView>
          </children></AnchorPane>
-      <Circle fill="WHITE" layoutX="32.0" layoutY="41.0" radius="29.0" stroke="BLACK" strokeType="INSIDE" />
-      <ImageView fitHeight="30.0" fitWidth="38.0" layoutX="17.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../Image/icons8-user.gif" />
-         </image>
-      </ImageView>
-      <Text fill="#fffcfc" layoutX="71.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CHAMINDU CHIRANTHA">
+      <Text fill="#080808" layoutX="14.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CHAMINDU CHIRANTHA">
          <font>
             <Font name="Calibri Bold" size="16.0" />
          </font>
       </Text>
+      <ImageView fitHeight="64.0" fitWidth="167.0" layoutX="561.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true" style="-fx-scale-x: 1.2; -fx-scale-z: 1.5; -fx-scale-y: 1.2; -fx-opacity: 10; -fx-translate-y: 1.2; -fx-background-color: #7f8c8d;">
+         <image>
+            <Image url="@../Image/Screenshot%202024-11-15%20181935.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

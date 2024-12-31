@@ -9,8 +9,10 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
 import javax.swing.*;
@@ -203,6 +205,21 @@ public class HomePageController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
             AnchorPane loadedPane = loader.load();
             loadingAnchorPane.getChildren().add(loadedPane);
+
+            DropShadow glow = new DropShadow();
+            glow.setColor(Color.CORNFLOWERBLUE);
+            glow.setWidth(20);
+            glow.setHeight(20);
+            glow.setRadius(20);
+            buttAtten.setEffect(glow);
+            buutEmployee.setEffect(glow);
+            buttMachine.setEffect(glow);
+            buttSalary.setEffect(glow);
+            buttStock.setEffect(glow);
+            buttProduct.setEffect(glow);
+            buttSupplier.setEffect(glow);
+            ButtWorkSheet.setEffect(glow);
+            ButtPayment.setEffect(glow);
         } catch (IOException e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Failed to load view: " + fxmlPath);

@@ -15,7 +15,7 @@ public class AppInitializer extends Application {
     public void start(Stage stage) {
 
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(AppInitializer.class.getResource("/View/LoginView.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(AppInitializer.class.getResource("/View/HomePage.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), 1100,721);
             stage.setTitle("Garment Factory Management System");
 
