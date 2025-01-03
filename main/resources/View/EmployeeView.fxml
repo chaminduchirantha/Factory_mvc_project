@@ -13,7 +13,6 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="employeeAnchorPane" prefHeight="650.0" prefWidth="900.0" style="-fx-background-color: #fff; -fx-border-color: #1e272e; -fx-background-radius: 10; -fx-border-radius: 10;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse.factory_mvc_project.controller.EmployeeController">
@@ -151,7 +150,6 @@
             <Image url="@../Image/icons8-employees-50.png" />
          </image>
       </ImageView>
-      <Line endX="114.800048828125" layoutX="454.0" layoutY="53.0" startX="-100.0" stroke="#43a7ff" />
       <HBox layoutX="354.0" layoutY="338.0" prefHeight="39.0" prefWidth="122.0" />
       <ComboBox fx:id="cmbSection" layoutX="679.0" layoutY="255.0" prefHeight="26.0" prefWidth="169.0" style="-fx-border-color: #0652DD; -fx-border-width: 0 0 1px 0; -fx-background-color: #fff; -fx-scale-x: 1.2; -fx-scale-y: 1.2; -fx-scale-z: 1; -fx-translate-x: 1.2; -fx-translate-y: 1.2; -fx-translate-z: 0; -fx-opacity: 10; -fx-font-weight: bold;">
          <effect>
@@ -165,10 +163,5 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </ComboBox>
-      <ImageView fitHeight="39.0" fitWidth="40.0" layoutX="839.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../Image/logoDesign.png" />
-         </image>
-      </ImageView>
    </children>
 </AnchorPane>
