@@ -11,7 +11,6 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="PaymentAnchorPane" prefHeight="650.0" prefWidth="900.0" style="-fx-background-color: #fff; -fx-border-color: #1e272e; -fx-background-radius: 10; -fx-border-radius: 10;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse.factory_mvc_project.controller.PaymentController">
@@ -127,20 +126,14 @@
             <Font name="Calibri Bold" size="16.0" />
          </font>
       </Label>
-      <Label fx:id="lblId1" layoutX="412.0" layoutY="14.0" prefHeight="28.0" prefWidth="83.0" text="Payment ">
+      <Label fx:id="lblId1" layoutX="428.0" layoutY="15.0" prefHeight="28.0" prefWidth="83.0" text="Payment ">
          <font>
             <Font name="Segoe UI Symbol" size="19.0" />
          </font>
       </Label>
-      <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="374.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="390.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../Image/icons8-payment-50.png" />
-         </image>
-      </ImageView>
-      <Line endX="34.800018310546875" endY="-3.814697265625E-6" layoutX="470.0" layoutY="43.0" startX="-100.0" stroke="#2c5cfa" />
-      <ImageView fitHeight="39.0" fitWidth="40.0" layoutX="840.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../Image/logoDesign.png" />
          </image>
       </ImageView>
    </children>

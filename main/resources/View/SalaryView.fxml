@@ -13,7 +13,6 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="salaryAnchorPane" prefHeight="650.0" prefWidth="900.0" style="-fx-background-color: #fff; -fx-background-radius: 10; -fx-border-color: #1e272e; -fx-border-radius: 10;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse.factory_mvc_project.controller.SalaryController">
@@ -112,17 +111,16 @@
             <Font name="Calibri Bold" size="16.0" />
          </font>
       </Label>
-      <Label fx:id="lblid1" layoutX="427.0" layoutY="14.0" prefHeight="34.0" prefWidth="78.0" text="Salary ">
+      <Label fx:id="lblid1" layoutX="446.0" layoutY="14.0" prefHeight="34.0" prefWidth="78.0" text="Salary ">
          <font>
             <Font name="Segoe UI Symbol" size="19.0" />
          </font>
       </Label>
-      <ImageView fitHeight="30.0" fitWidth="34.0" layoutX="393.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="30.0" fitWidth="34.0" layoutX="412.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../Image/icons8-salary-50.png" />
          </image>
       </ImageView>
-      <Line endX="83.60003662109375" layoutX="450.0" layoutY="48.0" startX="-100.0" stroke="#2c5cfa" />
       <Label fx:id="lblId" layoutX="42.0" layoutY="240.0" text="Employee Id">
          <font>
             <Font name="Calibri Bold" size="16.0" />
@@ -167,10 +165,5 @@
             <Font name="Calibri Bold Italic" size="14.0" />
          </font>
       </Label>
-      <ImageView fitHeight="39.0" fitWidth="40.0" layoutX="847.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../Image/logoDesign.png" />
-         </image>
-      </ImageView>
    </children>
 </AnchorPane>
