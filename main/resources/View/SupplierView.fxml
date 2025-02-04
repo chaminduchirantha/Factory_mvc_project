@@ -9,7 +9,6 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="supplierAnchorPane" prefHeight="651.0" prefWidth="900.0" style="-fx-background-color: #fff; -fx-border-color: #1e272e; -fx-background-radius: 10; -fx-border-radius: 10;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse.factory_mvc_project.controller.SupplierController">
@@ -120,16 +119,15 @@
             <Font name="Calibri Bold" size="16.0" />
          </font>
       </TextField>
-      <Label fx:id="lblId1" layoutX="418.0" layoutY="27.0" text="Supplier">
+      <Label fx:id="lblId1" layoutX="433.0" layoutY="18.0" text="Supplier">
          <font>
             <Font name="Segoe UI Symbol" size="19.0" />
          </font>
       </Label>
-      <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="383.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="398.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../Image/icons8-supplier-48.png" />
          </image>
       </ImageView>
-      <Line endX="34.800018310546875" endY="-3.814697265625E-6" layoutX="470.0" layoutY="55.0" startX="-100.0" stroke="#2c5cfa" />
    </children>
 </AnchorPane>

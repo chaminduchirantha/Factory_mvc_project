@@ -27,8 +27,6 @@ import java.util.ResourceBundle;
 public class AttendenceController implements Initializable {
 
 
-
-
     @FXML
     private AnchorPane attendenceAnchorPane;
 
@@ -243,7 +241,7 @@ public class AttendenceController implements Initializable {
         }
     }
 
-    @FXML
+    @FXML 
     void clearOnActon(ActionEvent event)  {
         try {
             refreshPage();

@@ -241,7 +241,7 @@ public class PaymentController implements Initializable {
 
     @FXML
     void updateOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
-//        try {
+        try {
             String paymentId = txtCode.getText();
             LocalDate paymentDate = txtDate.getValue();
             double paymentAmount = Double.parseDouble(txtPrice.getText());
@@ -271,9 +271,9 @@ public class PaymentController implements Initializable {
             }
         }
 
-//        } catch (Exception e) {
-//            new Alert(Alert.AlertType.ERROR, "Payment not found").show();
-//        }
+        } catch (Exception e) {
+            new Alert(Alert.AlertType.ERROR, "Payment not found").show();
+        }
     }
 
     @FXML

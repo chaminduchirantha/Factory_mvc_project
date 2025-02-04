@@ -9,13 +9,18 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
 import javax.swing.*;
 import java.io.IOException;
 import java.util.Optional;
+import static lk.ijse.gdse.factory_mvc_project.controller.LoginViewController.loggedInUser;
+import static lk.ijse.gdse.factory_mvc_project.controller.LoginViewController.loggedInUser1;
+
 
 public class HomePageController {
 
@@ -24,25 +29,22 @@ public class HomePageController {
 
 
     @FXML
-    private Button ButtPayment;
+    Button ButtPayment;
 
     @FXML
-    private Button ButtWorkSheet;
+    Button ButtWorkSheet;
 
     @FXML
     private Pane OptionPane;
 
     @FXML
-    private Button buttAtten;
+    Button buttAtten;
 
     @FXML
     private Button buttBranch;
 
     @FXML
-    private Button buttDililvary;
-
-    @FXML
-    private Button buttMachine;
+    Button buttMachine;
 
     @FXML
     private Button buttProductDetail;
@@ -54,10 +56,10 @@ public class HomePageController {
     private Button buttSalary;
 
     @FXML
-    private Button buttStock;
+    Button buttStock;
 
     @FXML
-    private Button buttSupplier;
+    Button buttSupplier;
 
     @FXML
     private Button buutEmployee;
@@ -75,6 +77,45 @@ public class HomePageController {
 
     LoginViewController loginViewController = new LoginViewController();
 
+
+    @FXML
+    public void initialize() {
+        if (!"gm".equals(loggedInUser)) {
+            buttSupplier.setDisable(true);
+            buttMachine.setDisable(true);
+            buttStock.setDisable(true);
+            buttProduct.setDisable(true);
+            ButtPayment.setDisable(true);
+            ButtWorkSheet.setDisable(true);
+            buutEmployee.setDisable(false);
+            buttAtten.setDisable(false);
+            buttSalary.setDisable(false);
+//        }else if (!"gm".equals(loggedInUser1)){
+//
+//            buttMachine.setDisable(false);
+//            buttStock.setDisable(false);
+        }
+        if (!"fm".equals(loggedInUser)){
+            buttSupplier.setDisable(false);
+            buttProduct.setDisable(false);
+            ButtPayment.setDisable(false);
+            buttStock.setDisable(false);
+            buutEmployee.setDisable(false);
+            buttAtten.setDisable(false);
+            buttMachine.setDisable(false);
+            ButtWorkSheet.setDisable(false);
+            buttSalary.setDisable(false);
+
+        }
+
+        if (!"gm".equals(loggedInUser)){
+            buttSalary.setDisable(true);
+            buutEmployee.setDisable(true);
+            buttMachine.setDisable(true);
+            buttAtten.setDisable(true);
+            ButtWorkSheet.setDisable(true);
+        }
+    }
 
     @FXML
     void logoutOnAction(ActionEvent event) throws IOException {
@@ -164,6 +205,21 @@ public class HomePageController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
             AnchorPane loadedPane = loader.load();
             loadingAnchorPane.getChildren().add(loadedPane);
+
+//            DropShadow glow = new DropShadow();
+//            glow.setColor(Color.CORNFLOWERBLUE);
+//            glow.setWidth(20);
+//            glow.setHeight(20);
+//            glow.setRadius(20);
+//            buttAtten.setEffect(glow);
+//            buutEmployee.setEffect(glow);
+//            buttMachine.setEffect(glow);
+//            buttSalary.setEffect(glow);
+//            buttStock.setEffect(glow);
+//            buttProduct.setEffect(glow);
+//            buttSupplier.setEffect(glow);
+//            ButtWorkSheet.setEffect(glow);
+//            ButtPayment.setEffect(glow);
         } catch (IOException e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Failed to load view: " + fxmlPath);

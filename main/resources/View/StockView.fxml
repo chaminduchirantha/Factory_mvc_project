@@ -12,7 +12,6 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="stockAnchorPane" prefHeight="650.0" prefWidth="900.0" style="-fx-background-color: #fff; -fx-border-color: #1e272e; -fx-background-radius: 10; -fx-border-radius: 10;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse.factory_mvc_project.controller.StockController">
@@ -49,7 +48,7 @@
          <font>
             <Font name="Calibri Bold" size="16.0" />
          </font></TextField>
-      <Button fx:id="buttReport" layoutX="295.0" layoutY="335.0" mnemonicParsing="false" onAction="#reportOnAction" prefHeight="30.0" prefWidth="191.0" style="-fx-background-color: #7f8c8d; -fx-background-radius: 6;" text="Genarate Item Report" textFill="WHITE">
+      <Button fx:id="buttReport" layoutX="433.0" layoutY="357.0" mnemonicParsing="false" onAction="#reportOnAction" prefHeight="30.0" prefWidth="174.0" style="-fx-background-color: #7f8c8d; -fx-background-radius: 6;" text="Genarate Item Report" textFill="WHITE">
          <font>
             <Font name="Calibri Bold" size="16.0" />
          </font>
@@ -57,7 +56,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="buttSave" layoutX="500.0" layoutY="335.0" mnemonicParsing="false" onAction="#saveOnAction" prefHeight="26.0" prefWidth="83.0" style="-fx-background-color: #2ecc71; -fx-background-radius: 6;" text="Save" textFill="WHITE">
+      <Button fx:id="buttSave" layoutX="500.0" layoutY="314.0" mnemonicParsing="false" onAction="#saveOnAction" prefHeight="26.0" prefWidth="83.0" style="-fx-background-color: #2ecc71; -fx-background-radius: 6;" text="Save" textFill="WHITE">
          <font>
             <Font name="Calibri Bold" size="16.0" />
          </font>
@@ -65,7 +64,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="buttUpdate" layoutX="595.0" layoutY="335.0" mnemonicParsing="false" onAction="#updateOnAction" prefHeight="26.0" prefWidth="83.0" style="-fx-background-color: #2ecc71; -fx-background-radius: 6;" text="Update" textFill="WHITE">
+      <Button fx:id="buttUpdate" layoutX="595.0" layoutY="314.0" mnemonicParsing="false" onAction="#updateOnAction" prefHeight="26.0" prefWidth="83.0" style="-fx-background-color: #2ecc71; -fx-background-radius: 6;" text="Update" textFill="WHITE">
          <font>
             <Font name="Calibri Bold" size="16.0" />
          </font>
@@ -73,7 +72,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="buttDelete" layoutX="691.0" layoutY="335.0" mnemonicParsing="false" onAction="#deleteOnAction" prefHeight="26.0" prefWidth="83.0" style="-fx-background-color: #c0392b; -fx-background-radius: 6;" text="Delete" textFill="WHITE">
+      <Button fx:id="buttDelete" layoutX="691.0" layoutY="314.0" mnemonicParsing="false" onAction="#deleteOnAction" prefHeight="26.0" prefWidth="83.0" style="-fx-background-color: #c0392b; -fx-background-radius: 6;" text="Delete" textFill="WHITE">
          <font>
             <Font name="Calibri Bold" size="16.0" />
          </font>
@@ -81,7 +80,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="buttClear" layoutX="784.0" layoutY="335.0" mnemonicParsing="false" onAction="#clearONAction" prefHeight="26.0" prefWidth="83.0" style="-fx-background-color: #3498db; -fx-background-radius: 6;" text="Clear" textFill="WHITE">
+      <Button fx:id="buttClear" layoutX="784.0" layoutY="314.0" mnemonicParsing="false" onAction="#clearONAction" prefHeight="26.0" prefWidth="83.0" style="-fx-background-color: #3498db; -fx-background-radius: 6;" text="Clear" textFill="WHITE">
          <font>
             <Font name="Calibri Bold" size="16.0" />
          </font>
@@ -113,17 +112,16 @@
          <font>
             <Font name="Calibri Bold" size="16.0" />
          </font></TextField>
-      <Label fx:id="lblId1" layoutX="452.0" layoutY="28.0" prefHeight="26.0" prefWidth="66.0" text="Stock">
+      <Label fx:id="lblId1" layoutX="434.0" layoutY="15.0" prefHeight="26.0" prefWidth="66.0" text="Stock">
          <font>
             <Font name="Segoe UI Symbol" size="19.0" />
          </font>
       </Label>
-      <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="416.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="398.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../Image/icons8-stock-30.png" />
          </image>
       </ImageView>
-      <Line endX="34.800018310546875" endY="-3.814697265625E-6" layoutX="490.0" layoutY="57.0" startX="-100.0" stroke="#2c5cfa" />
       <ComboBox fx:id="cmbOption" layoutX="736.0" layoutY="168.0" prefHeight="26.0" prefWidth="115.0" style="-fx-border-color: #0652DD; -fx-border-width: 0 0 1px 0; -fx-background-color: #fff; -fx-scale-x: 1.2; -fx-scale-y: 1.2; -fx-scale-z: 1; -fx-translate-x: 1.2; -fx-translate-y: 1.2; -fx-translate-z: 0; -fx-opacity: 10; -fx-font-weight: bold;">
          <effect>
             <Blend>
@@ -136,7 +134,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </ComboBox>
-      <Button fx:id="buttReport" layoutX="27.0" layoutY="335.0" mnemonicParsing="false" onAction="#productReportOnAction" prefHeight="30.0" prefWidth="253.0" style="-fx-background-color: #7f8c8d; -fx-background-radius: 6;" text="Genarate Item Product Report" textFill="WHITE">
+      <Button fx:id="buttReport" layoutX="613.0" layoutY="357.0" mnemonicParsing="false" onAction="#productReportOnAction" prefHeight="30.0" prefWidth="253.0" style="-fx-background-color: #7f8c8d; -fx-background-radius: 6;" text="Genarate Item Product Report" textFill="WHITE">
          <font>
             <Font name="Calibri Bold" size="16.0" />
          </font>

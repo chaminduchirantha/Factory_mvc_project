@@ -28,6 +28,9 @@ public class UserModel {
             userDto.setUserPassword(rst.getString("user_Password"));
             userDto.setUserEmail(rst.getString("user_Email"));
             userDto.setUserContactNumber(rst.getString("user_contact_number"));
+            userDto.setBranchId(rst.getString("branch_id"));
+            userDto.setEmployeeId(rst.getString("employee_id"));
+
 
             userDtos.add(userDto);
         }
@@ -36,7 +39,7 @@ public class UserModel {
 
     public boolean saveUser(UserDto userDto) throws SQLException, ClassNotFoundException {
         Connection connection = DBConnection.getInstance().getConnection();
-        String sql = "insert into user values(?,?,?,?,?)";
+        String sql = "insert into user values(?,?,?,?,?,?,?)";
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setString(1, userDto.getUserId());
         statement.setString(2, userDto.getUserName());
@@ -50,13 +53,15 @@ public class UserModel {
 
     public boolean updateSUser(UserDto userDto) throws SQLException, ClassNotFoundException {
         Connection connection = DBConnection.getInstance().getConnection();
-        String sql = "update user set user_name=?,user_password=?,user_email=?,use_contact_number=? where user_id=?";
+        String sql = "update user set user_name=?,user_password=?,user_email=?,use_contact_number=?,branch_id=?,employee_id=? where user_id=?";
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setString(1, userDto.getUserName());
         statement.setString(2, userDto.getUserPassword());
         statement.setString(3, userDto.getUserEmail());
         statement.setString(4, userDto.getUserContactNumber());
         statement.setString(5, userDto.getUserId());
+        statement.setString(6, userDto.getBranchId());
+        statement.setString(7, userDto.getEmployeeId());
 
         int isUpdate = statement.executeUpdate();
         return isUpdate> 0;

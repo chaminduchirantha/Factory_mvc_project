@@ -13,4 +13,6 @@ public class UserTm {
     private String userName;
     private String userEmail;
     private String userContactNumber;
+    private String branchId;
+    private String employeeId;
 }

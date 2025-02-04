@@ -12,7 +12,6 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="workShhetAnchorPane" prefHeight="650.0" prefWidth="900.0" style="-fx-background-color: #fff; -fx-background-radius: 10; -fx-border-color: #1e272e; -fx-border-radius: 10;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse.factory_mvc_project.controller.WorkSheetController">
@@ -123,17 +122,16 @@
             <Font name="Calibri Bold" size="16.0" />
          </font>
       </Label>
-      <Label fx:id="lblid1" layoutX="400.0" layoutY="14.0" prefHeight="34.0" prefWidth="102.0" text="Worksheet">
+      <Label fx:id="lblid1" layoutX="416.0" layoutY="14.0" prefHeight="34.0" prefWidth="102.0" text="Worksheet">
          <font>
             <Font name="Segoe UI Symbol" size="19.0" />
          </font>
       </Label>
-      <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="366.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="382.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../Image/icons8-general-ledger-50.png" />
          </image>
       </ImageView>
-      <Line endX="110.0" layoutX="429.0" layoutY="48.0" startX="-100.0" stroke="#43a7ff" />
       <Label fx:id="lblId" layoutX="42.0" layoutY="207.0" text="Employee Id">
          <font>
             <Font name="Calibri Bold" size="16.0" />
